@@ -1,6 +1,6 @@
 import MainPage from '../main-page/main-page';
 import {Route, BrowserRouter, Routes} from 'react-router-dom';
-import { AppRoute } from '../../const/const';
+import { AppRoute, AuthorizationStatus } from '../../const/const';
 
 //import FavoritesEmptyPage from '../favorites-empty-page/favorites-empty-page';
 import FavoritesPage from '../favorites-page/favorites-page';
@@ -9,6 +9,7 @@ import LoginComponent from '../login-component/login-component';
 //import OfferNotLoggedPage from '../offer-not-logged-page/offer-not-logged-page';
 import OfferPage from '../offer-page/offer-page';
 import ErrorPage from '../errorPage/errorPage';
+import PrivateRoute from '../private-route/private-route';
 
 type AppScreenProps = {
   cardsCount: number;
@@ -23,7 +24,11 @@ const App = ({cardsCount}: AppScreenProps): JSX.Element => (
       />
       <Route
         path={AppRoute.Favorites}
-        element ={<FavoritesPage/>}
+        element ={
+          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+            <FavoritesPage/>
+          </PrivateRoute>
+        }
       />
       <Route
         path={AppRoute.Login}
