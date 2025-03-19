@@ -13,9 +13,12 @@ import PrivateRoute from '../private-route/private-route';
 
 type AppScreenProps = {
   cardsCount: number;
+  authStatus: AuthorizationStatus;
 }
 
-const App = ({cardsCount}: AppScreenProps): JSX.Element => (
+
+const App = ({cardsCount, authStatus}: AppScreenProps): JSX.Element => (
+
   <BrowserRouter>
     <Routes>
       <Route
@@ -25,7 +28,7 @@ const App = ({cardsCount}: AppScreenProps): JSX.Element => (
       <Route
         path={AppRoute.Favorites}
         element ={
-          <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
+          <PrivateRoute isAuthorizate={authStatus === AuthorizationStatus.Auth}>
             <FavoritesPage/>
           </PrivateRoute>
         }
