@@ -21,3 +21,5 @@ export type OfferPreview = {
   rating: number;
   previewImage: string;
 }
+
+export type OffersPreview = OfferPreview[];

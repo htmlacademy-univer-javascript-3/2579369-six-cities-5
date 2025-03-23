@@ -1,13 +1,16 @@
 import { Offer } from '../types/offers';
+import { CityName } from '../const/const';
 
-export const offer: Offer[] = [
+const AVATAR_URL = 'https://i.pravatar.cc/128';
+
+export const offers: Offer[] = [
   {
     id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
     title: 'Beautiful & luxurious studio at great location',
     type: 'apartment',
     price: 120,
     city: {
-      name: 'Amsterdam',
+      name: CityName.Amsterdam,
       location: {
         latitude: 52.35514938496378,
         longtitude: 4.673877537499948,
@@ -19,10 +22,10 @@ export const offer: Offer[] = [
       longtitude: 4.673877537499948,
       zoom: 8
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: false,
-    rating: 3,
-    previewImage: 'https://url-to-image/image.png',
+    rating: 2,
+    previewImage: '../markup/img/apartment-01.jpg',
     description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
     bedrooms: 3,
     goods: [
@@ -30,21 +33,21 @@ export const offer: Offer[] = [
     ],
     host:{
       name:'Oliver Conner',
-      avatarUrl:'https://url-to-image/image.png',
+      avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
       isPro: false,
     },
     images: [
-      'https://url-to-image/image.png'
+      '../markup/img/apartment-01.jpg'
     ],
     maxAdults: 4,
   },
   {
     id: '9af6f221-h28f-3521-82cd-e0b882a27f00',
-    title: 'Beautiful & luxurious house at quiet area',
+    title: 'Spacious & luxurious house at quiet area',
     type: 'Detached house',
     price: 200,
     city: {
-      name: 'Hamburg',
+      name: CityName.Hamburg,
       location: {
         latitude: 32.35511118467378,
         longtitude: 15.67387123499948,
@@ -59,7 +62,7 @@ export const offer: Offer[] = [
     isFavorite: false,
     isPremium: false,
     rating: 5,
-    previewImage: 'https://url-to-image/image.png',
+    previewImage: '../markup/img/apartment-02.jpg',
     description: 'A big house near Elbphilharmonie.',
     bedrooms: 5,
     goods: [
@@ -68,11 +71,11 @@ export const offer: Offer[] = [
     ],
     host:{
       name:'Filip Snow',
-      avatarUrl:'https://url-to-image/image.png',
+      avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
       isPro: false,
     },
     images: [
-      'https://url-to-image/image.png'
+      '../markup/img/apartment-02.jpg'
     ],
     maxAdults: 6,
   },
@@ -82,7 +85,7 @@ export const offer: Offer[] = [
     type: 'Flat',
     price: 100,
     city: {
-      name: 'Brussels',
+      name: CityName.Brussels,
       location: {
         latitude: 12.35511118467378,
         longtitude: 65.67387123499948,
@@ -96,8 +99,8 @@ export const offer: Offer[] = [
     },
     isFavorite: false,
     isPremium: true,
-    rating: 4,
-    previewImage: 'https://url-to-image/image.png',
+    rating: 3,
+    previewImage: '../markup/img/apartment-03.jpg',
     description: 'Beautiful small flat in the heart of the city.',
     bedrooms: 2,
     goods: [
@@ -106,22 +109,22 @@ export const offer: Offer[] = [
     ],
     host:{
       name:'Lolita Milyavskaya',
-      avatarUrl:'https://url-to-image/image.png',
+      avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
       isPro: true,
     },
     images: [
-      'https://url-to-image/image.png',
-      'https://url-to-image/image.png'
+      '../markup/img/apartment-small-03.jpg',
+      '../markup/img/apartment-small-03.jpg'
     ],
     maxAdults: 3,
   },
   {
     id: '7ff2d234-s99s-2222-97lg-e0b882a55f00',
-    title: 'Luxurious flat in the city center',
+    title: 'Modern and comfortable mansion',
     type: 'Mansion',
     price: 400,
     city: {
-      name: 'Paris',
+      name: CityName.Paris,
       location: {
         latitude: 22.35523518411178,
         longtitude: 45.67387123499948,
@@ -136,7 +139,7 @@ export const offer: Offer[] = [
     isFavorite: true,
     isPremium: true,
     rating: 5,
-    previewImage: 'https://url-to-image/image.png',
+    previewImage: '../markup/img/apartment-02.jpg',
     description: 'Modern mansion in a quiet area.',
     bedrooms: 6,
     goods: [
@@ -145,12 +148,12 @@ export const offer: Offer[] = [
     ],
     host:{
       name:'Alex Partini',
-      avatarUrl:'https://url-to-image/image.png',
+      avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
       isPro: true,
     },
     images: [
-      'https://url-to-image/image.png',
-      'https://url-to-image/image.png'
+      '../markup/img/apartment-small-04.jpg',
+      '../markup/img/apartment-small-04.jpg'
     ],
     maxAdults: 10,
   },

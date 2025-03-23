@@ -14,3 +14,6 @@ export type Offer = OfferPreview & {
   images: string[];
   maxAdults: number;
 }
+
+export type Offers = Offer[];
+

@@ -1,4 +1,5 @@
 import { OfferPreview } from '../types/offers-preview';
+import { CityName } from '../const/const';
 
 export const offersPreview: OfferPreview[] = [
   {
@@ -7,7 +8,7 @@ export const offersPreview: OfferPreview[] = [
     type: 'apartment',
     price: 120,
     city: {
-      name: 'Amsterdam',
+      name: CityName.Amsterdam,
       location: {
         latitude: 52.35514938496378,
         longtitude: 4.673877537499948,
@@ -19,10 +20,10 @@ export const offersPreview: OfferPreview[] = [
       longtitude: 4.673877537499948,
       zoom: 8
     },
-    isFavorite: false,
-    isPremium: false,
-    rating: 3,
-    previewImage: 'https://url-to-image/image.png'
+    isFavorite: true,
+    isPremium: true,
+    rating: 2,
+    previewImage: '../markup/img/apartment-01.jpg'
   },
   {
     id: '9af6f221-h28f-3521-82cd-e0b882a27f00',
@@ -30,7 +31,7 @@ export const offersPreview: OfferPreview[] = [
     type: 'Detached house',
     price: 200,
     city: {
-      name: 'Hamburg',
+      name: CityName.Hamburg,
       location: {
         latitude: 32.35511118467378,
         longtitude: 15.67387123499948,
@@ -43,9 +44,9 @@ export const offersPreview: OfferPreview[] = [
       zoom: 5
     },
     isFavorite: false,
-    isPremium: false,
+    isPremium: true,
     rating: 5,
-    previewImage: 'https://url-to-image/image.png'
+    previewImage: '../markup/img/apartment-03.jpg'
   },
   {
     id: '4gf2f449-h99k-1121-82lm-e0b882a55f00',
@@ -53,7 +54,7 @@ export const offersPreview: OfferPreview[] = [
     type: 'Flat',
     price: 100,
     city: {
-      name: 'Brussels',
+      name: CityName.Brussels,
       location: {
         latitude: 12.35511118467378,
         longtitude: 65.67387123499948,
@@ -66,17 +67,17 @@ export const offersPreview: OfferPreview[] = [
       zoom: 4
     },
     isFavorite: false,
-    isPremium: true,
-    rating: 4,
-    previewImage: 'https://url-to-image/image.png'
+    isPremium: false,
+    rating: 3,
+    previewImage: '../markup/img/apartment-02.jpg'
   },
   {
     id: '7ff2d234-s99s-2222-97lg-e0b882a55f00',
-    title: 'Luxurious flat in the city center',
+    title: 'Modern and comfortable mansion',
     type: 'Mansion',
     price: 400,
     city: {
-      name: 'Paris',
+      name: CityName.Paris,
       location: {
         latitude: 22.35523518411178,
         longtitude: 45.67387123499948,
@@ -91,6 +92,6 @@ export const offersPreview: OfferPreview[] = [
     isFavorite: true,
     isPremium: false,
     rating: 5,
-    previewImage: 'https://url-to-image/image.png'
+    previewImage: '../markup/img/apartment-03.jpg'
   },
 ];
