@@ -4,6 +4,7 @@ import { AppRoute } from '../../const/const';
 import { getRatingWidth } from '../../utils/cards';
 import { useState} from 'react';
 
+
 type CardProps = {
   offer: OfferPreview;
   block: string;

@@ -41,7 +41,7 @@ const App = ({authStatus, offers}: AppScreenProps): JSX.Element => (
       />
       <Route
         path={`${AppRoute.Offer}/:offerId`}
-        element ={<OfferPage offers = {offers}/>}
+        element ={<OfferPage/>}
       />
       <Route
         path="*"
