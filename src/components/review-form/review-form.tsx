@@ -1,18 +1,22 @@
-import { Fragment, useState, ChangeEvent } from 'react';
+import { Fragment, useState, ChangeEvent, useMemo } from 'react';
 import { ratingMap } from '../../const/const';
 
 const ReviewForm = () => {
 
-  const [comment,setComment] = useState('');
-  const [rating, setRaiting] = useState('');
-  const isValid = rating !== '';
+  const [form, setForm] = useState({
+    review: '',
+    rating: '',
+  });
 
-  function handleTextareaChange(evt: ChangeEvent<HTMLTextAreaElement>) {
-    setComment(evt.target.value);
-  }
+  const isValid = useMemo(() =>form.review.length >= 50 && form.rating !== '',[form.review, form.rating]);
 
-  function handleInputChange(evt: ChangeEvent<HTMLInputElement>) {
-    setRaiting(evt.target.value);
+
+  function handleChange(evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
+    const {name, value} = evt.target;
+    setForm((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   }
 
   return (
@@ -27,8 +31,8 @@ const ReviewForm = () => {
                 name="rating"
                 value={score}
                 id={`${score}-stars`} type="radio"
-                checked={rating === score}
-                onChange={handleInputChange}
+                checked={form.rating === score}
+                onChange={handleChange}
               />
               <label htmlFor={`${score}-stars`} className="reviews__rating-label form__rating-label" title={title}>
                 <svg className="form__star-image" width="37" height="33">
@@ -44,8 +48,8 @@ const ReviewForm = () => {
         id="review"
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
-        value={comment}
-        onChange={handleTextareaChange}
+        value={form.review}
+        onChange={handleChange}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

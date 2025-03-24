@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { OfferPreview } from '../../types/offers-preview';
 import { AppRoute } from '../../const/const';
-import { getRaitingWidth } from '../../utils/cards';
+import { getRatingWidth } from '../../utils/cards';
 import { useState} from 'react';
 
 type CardProps = {
@@ -45,7 +45,7 @@ const Card = ({offer, block}: CardProps): JSX.Element => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: getRaitingWidth(rating)}}></span>
+            <span style={{width: getRatingWidth(rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>

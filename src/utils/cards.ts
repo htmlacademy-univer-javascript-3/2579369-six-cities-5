@@ -1,5 +1,5 @@
-function getRaitingWidth(count:number) {
+function getRatingWidth(count:number) {
   return count * 20;
 }
 
-export {getRaitingWidth};
+export {getRatingWidth};

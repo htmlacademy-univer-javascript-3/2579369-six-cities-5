@@ -1,6 +1,6 @@
 import { OfferPreview } from '../../types/offers-preview';
 import { Link } from 'react-router-dom';
-import { getRaitingWidth } from '../../utils/cards';
+import { getRatingWidth } from '../../utils/cards';
 import { AppRoute } from '../../const/const';
 
 type FavoritiesCardProps = {
@@ -40,7 +40,7 @@ const FavoritiesCard = ({offer}: FavoritiesCardProps): JSX.Element | null => {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{width: getRaitingWidth(rating)}}></span>
+            <span style={{width: getRatingWidth(rating)}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
