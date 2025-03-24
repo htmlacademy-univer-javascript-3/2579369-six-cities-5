@@ -10,12 +10,12 @@ import LoginComponent from '../login-component/login-component';
 import OfferPage from '../offer-page/offer-page';
 import ErrorPage from '../errorPage/errorPage';
 import PrivateRoute from '../private-route/private-route';
-import { Offers } from '../../types/offers';
+import { OffersPreview } from '../../types/offers-preview';
 
 
 type AppScreenProps = {
   authStatus: AuthorizationStatus;
-  offers: Offers;
+  offers: OffersPreview;
 }
 
 
