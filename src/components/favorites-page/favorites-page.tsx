@@ -1,23 +1,11 @@
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
 import { OfferPreview } from '../../types/offers-preview';
-import FavoritiesCard from '../favorites-card/favorities-card';
-
+import Card from '../card/card';
+import getFavoritiesByCity from '../../utils/favorities-by-city';
 type FavoritiesProps = {
   offers: OfferPreview[];
 }
-
-const getFavoritiesByCity = (favorites: OfferPreview[]) =>
-  favorites.reduce<{ [key: string]: OfferPreview[]}>((acc,curr) => {
-    const city = curr.city.name;
-
-    if(!(city in acc)) {
-      acc[city] = [];
-    }
-    acc[city].push(curr);
-
-    return acc;
-  }, {});
 
 const FavoritesPage = ({offers}: FavoritiesProps): JSX.Element => {
   const favoritesByCity = getFavoritiesByCity(offers);
@@ -64,8 +52,9 @@ const FavoritesPage = ({offers}: FavoritiesProps): JSX.Element => {
                       </div>
                     </div>
                     <div className="favorites__places">
-                      {groupedFavorities.map((offer) => (
-                        <FavoritiesCard offer={offer} key={offer.id}/>
+                      {groupedFavorities.filter((offer) => offer.isFavorite).map((offer) => (
+
+                        <Card offer={offer} key={offer.id} block="favorities"/>
                       ))}
                     </div>
                   </li>
