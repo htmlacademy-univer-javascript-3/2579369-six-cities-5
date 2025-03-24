@@ -2,25 +2,25 @@ import { Link } from 'react-router-dom';
 import { OfferPreview } from '../../types/offers-preview';
 import { AppRoute } from '../../const/const';
 import { getRatingWidth } from '../../utils/cards';
-import { useState} from 'react';
 
 
 type CardProps = {
   offer: OfferPreview;
   block: string;
+  onCardHover?: (offerId: OfferPreview['id'] | null) => void;
+
 }
 
-const Card = ({offer, block}: CardProps): JSX.Element => {
+const Card = ({offer, block, onCardHover}: CardProps): JSX.Element => {
 
   const {isPremium, previewImage, id, price, rating, title, type } = offer;
 
-  const [, setActiveCard] = useState<string| null>(null);
 
   return(
     <article
       className={`${block}__card place-card`}
-      onMouseEnter={() => setActiveCard(id)}
-      onMouseLeave={() => setActiveCard(null)}
+      onMouseEnter={() => onCardHover?.(id)}
+      onMouseLeave={() => onCardHover?.(null)}
     >
       {isPremium && (
         <div className="place-card__mark">
