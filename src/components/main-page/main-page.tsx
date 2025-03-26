@@ -4,6 +4,7 @@ import Cards from '../cards-list/cards-list';
 import { OffersPreview } from '../../types/offers-preview';
 import { addPluralEnding } from '../../utils/common';
 import { AppRoute } from '../../const/const';
+import Map from '../map/map';
 
 type MainPageProps = {
   offers: OffersPreview;
@@ -100,7 +101,9 @@ const MainPage = ({offers}: MainPageProps): JSX.Element => (
             </div>
           </section>
           <div className="cities__right-section">
-            <section className="cities__map map"></section>
+            <section className="cities__map map">
+              <Map/>
+            </section>
           </div>
         </div>
       </div>
