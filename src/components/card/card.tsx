@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import { OfferPreview } from '../../types/offers-preview';
-import { AppRoute } from '../../const/const';
 import { getRatingWidth } from '../../utils/cards';
+import { getOfferPath } from '../../utils/common';
 
 
 type CardProps = {
@@ -27,7 +27,7 @@ const Card = ({offer, block, onCardHover}: CardProps): JSX.Element => {
           <span>Premium</span>
         </div>)}
       <div className={`${block}__image-wrapper place-card__image-wrapper`}>
-        <Link to={`${AppRoute.Offer}/${id}`}>
+        <Link to={getOfferPath(id)}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={title}></img>
         </Link>
       </div>
@@ -51,7 +51,7 @@ const Card = ({offer, block, onCardHover}: CardProps): JSX.Element => {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
+          <Link to={getOfferPath(id)}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

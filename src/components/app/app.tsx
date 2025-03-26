@@ -11,6 +11,7 @@ import OfferPage from '../offer-page/offer-page';
 import ErrorPage from '../errorPage/errorPage';
 import PrivateRoute from '../private-route/private-route';
 import { OffersPreview } from '../../types/offers-preview';
+import { getOfferPath } from '../../utils/common';
 
 
 type AppScreenProps = {
@@ -40,7 +41,7 @@ const App = ({authStatus, offers}: AppScreenProps): JSX.Element => (
         element ={<LoginComponent/>}
       />
       <Route
-        path={`${AppRoute.Offer}/:offerId`}
+        path={getOfferPath(':offerId')}
         element ={<OfferPage/>}
       />
       <Route
