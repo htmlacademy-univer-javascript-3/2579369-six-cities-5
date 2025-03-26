@@ -10,26 +10,29 @@ import LoginComponent from '../login-component/login-component';
 import OfferPage from '../offer-page/offer-page';
 import ErrorPage from '../errorPage/errorPage';
 import PrivateRoute from '../private-route/private-route';
+import { OffersPreview } from '../../types/offers-preview';
+import { getOfferPath } from '../../utils/common';
+
 
 type AppScreenProps = {
-  cardsCount: number;
   authStatus: AuthorizationStatus;
+  offers: OffersPreview;
 }
 
 
-const App = ({cardsCount, authStatus}: AppScreenProps): JSX.Element => (
+const App = ({authStatus, offers}: AppScreenProps): JSX.Element => (
 
   <BrowserRouter>
     <Routes>
       <Route
         path={AppRoute.Main}
-        element={<MainPage cardsCount={cardsCount}/>}
+        element={<MainPage offers={offers}/>}
       />
       <Route
         path={AppRoute.Favorites}
         element ={
           <PrivateRoute isAuthorizate={authStatus === AuthorizationStatus.Auth}>
-            <FavoritesPage/>
+            <FavoritesPage offers = {offers}/>
           </PrivateRoute>
         }
       />
@@ -38,7 +41,7 @@ const App = ({cardsCount, authStatus}: AppScreenProps): JSX.Element => (
         element ={<LoginComponent/>}
       />
       <Route
-        path={AppRoute.Offer}
+        path={getOfferPath(':offerId')}
         element ={<OfferPage/>}
       />
       <Route

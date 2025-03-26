@@ -7,7 +7,7 @@ export enum AppRoute {
   Main = '/',
   Login = '/login',
   Favorites = '/favorites',
-  Offer = '/offer/:id'
+  Offer = '/offer'
 }
 
 export enum AuthorizationStatus {
@@ -15,4 +15,22 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
-export {Setting};
+
+export enum CityName {
+  Paris ='Paris',
+  Cologne = 'Cologne',
+  Brussels = 'Brussels',
+  Amsterdam = 'Amsterdam',
+  Hamburg = 'Hamburg',
+  Dusseldorf = 'Dusseldorf'
+}
+
+const ratingMap = {
+  '5' : 'perfect',
+  '4' : 'good',
+  '3' : 'not bad',
+  '2' : 'badly',
+  '1' : 'terribly',
+};
+
+export {Setting, ratingMap};

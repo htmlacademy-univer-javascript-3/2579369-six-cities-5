@@ -1,7 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import Logo from '../logo/logo';
+import { AppRoute } from '../../const/const';
+import ReviewForm from '../review-form/review-form';
+
 
 const OfferPage = (): JSX.Element => (
+
   <div className="page">
     <header className="header">
       <div className="container">
@@ -10,7 +14,7 @@ const OfferPage = (): JSX.Element => (
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
-                <Link className="header__nav-link header__nav-link--profile" to="#">
+                <Link className="header__nav-link header__nav-link--profile" to={`${AppRoute.Favorites}`}>
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
                   <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
@@ -18,7 +22,7 @@ const OfferPage = (): JSX.Element => (
                 </Link>
               </li>
               <li className="header__nav-item">
-                <Link className="header__nav-link" to="/login">
+                <Link className="header__nav-link" to={`${AppRoute.Login}`}>
                   <span className="header__signout">Sign out</span>
                 </Link>
               </li>
@@ -173,52 +177,7 @@ const OfferPage = (): JSX.Element => (
                   </div>
                 </li>
               </ul>
-              <form className="reviews__form form" action="#" method="post">
-                <label className="reviews__label form__label" htmlFor="review">Your review</label>
-                <div className="reviews__rating-form form__rating">
-                  <input className="form__rating-input visually-hidden" name="rating" value="5" id="5-stars" type="radio"></input>
-                  <label htmlFor="5-stars" className="reviews__rating-label form__rating-label" title="perfect">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-
-                  <input className="form__rating-input visually-hidden" name="rating" value="4" id="4-stars" type="radio"></input>
-                  <label htmlFor="4-stars" className="reviews__rating-label form__rating-label" title="good">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-
-                  <input className="form__rating-input visually-hidden" name="rating" value="3" id="3-stars" type="radio"></input>
-                  <label htmlFor="3-stars" className="reviews__rating-label form__rating-label" title="not bad">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-
-                  <input className="form__rating-input visually-hidden" name="rating" value="2" id="2-stars" type="radio"></input>
-                  <label htmlFor="2-stars" className="reviews__rating-label form__rating-label" title="badly">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-
-                  <input className="form__rating-input visually-hidden" name="rating" value="1" id="1-star" type="radio"></input>
-                  <label htmlFor="1-star" className="reviews__rating-label form__rating-label" title="terribly">
-                    <svg className="form__star-image" width="37" height="33">
-                      <use xlinkHref="#icon-star"></use>
-                    </svg>
-                  </label>
-                </div>
-                <textarea className="reviews__textarea form__textarea" id="review" name="review" placeholder="Tell how was your stay, what you like and what can be improved"></textarea>
-                <div className="reviews__button-wrapper">
-                  <p className="reviews__help">
-                      To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
-                  </p>
-                  <button className="reviews__submit form__submit button" type="submit" disabled>Submit</button>
-                </div>
-              </form>
+              <ReviewForm/>
             </section>
           </div>
         </div>
@@ -230,7 +189,7 @@ const OfferPage = (): JSX.Element => (
           <div className="near-places__list places__list">
             <article className="near-places__card place-card">
               <div className="near-places__image-wrapper place-card__image-wrapper">
-                <Link to="#">
+                <Link to={`${AppRoute.Offer}`}>
                   <img className="place-card__image" src="img/room.jpg" width="260" height="200" alt="Place image"></img>
                 </Link>
               </div>
@@ -254,7 +213,7 @@ const OfferPage = (): JSX.Element => (
                   </div>
                 </div>
                 <h2 className="place-card__name">
-                  <Link to="#">Wood and stone place</Link>
+                  <Link to={`${AppRoute.Offer}`}>Wood and stone place</Link>
                 </h2>
                 <p className="place-card__type">Room</p>
               </div>
@@ -262,7 +221,7 @@ const OfferPage = (): JSX.Element => (
 
             <article className="near-places__card place-card">
               <div className="near-places__image-wrapper place-card__image-wrapper">
-                <Link to="#">
+                <Link to={`${AppRoute.Offer}`}>
                   <img className="place-card__image" src="img/apartment-02.jpg" width="260" height="200" alt="Place image"></img>
                 </Link>
               </div>
