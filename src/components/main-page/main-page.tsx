@@ -23,7 +23,7 @@ const AmsterdamCity = {
 const MainPage = ({offers}: MainPageProps): JSX.Element => {
 
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
-  const handleListItemHover = (listItemName) =>{};
+  //const handleListItemHover = (listItemName) =>{};
 
   return(
     <div className="page page--gray page--main">
@@ -111,12 +111,12 @@ const MainPage = ({offers}: MainPageProps): JSX.Element => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <Cards offers = {offers} />
+                <Cards offers = {offers} setActiveCard={setActiveCard}/>
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city= {AmsterdamCity} points={offers} />
+                <Map city= {AmsterdamCity} points={offers} activeCardId={activeCard} />
               </section>
             </div>
           </div>

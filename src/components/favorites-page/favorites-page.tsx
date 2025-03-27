@@ -54,7 +54,7 @@ const FavoritesPage = ({offers}: FavoritiesProps): JSX.Element => {
                     <div className="favorites__places">
                       {groupedFavorities.filter((offer) => offer.isFavorite).map((offer) => (
 
-                        <Card offer={offer} key={offer.id} block="favorities"/>
+                        <Card offer={offer} key={offer.id} block="favorites"/>
                       ))}
                     </div>
                   </li>
