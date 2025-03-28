@@ -1,4 +1,3 @@
-import React from 'react';
 import leaflet from 'leaflet';
 import { useRef, useEffect } from 'react';
 import { OfferPreview } from '../../types/offers-preview';
