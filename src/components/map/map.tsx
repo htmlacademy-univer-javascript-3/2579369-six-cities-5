@@ -16,7 +16,15 @@ const Map = ({city,points,activeCardId}: MapProp) => {
   const map = useMap({mapRef, city});
 
   useEffect(() => {
+
     if(map) {
+
+      map.eachLayer((layer) => {
+        if(layer instanceof leaflet.Marker) {
+          map.removeLayer(layer);
+        }
+      });
+
       points.forEach((point) => {
         const isActive = point.id === activeCardId;
         leaflet
