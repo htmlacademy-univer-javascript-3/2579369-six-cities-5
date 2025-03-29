@@ -7,11 +7,11 @@ import 'leaflet/dist/leaflet.css';
 
 type MapProp = {
   city:OfferPreview['city'];
-  points:OfferPreview[];
+  offers:OfferPreview[];
   activeCardId:OfferPreview['id'] | null;
 }
 
-const Map = ({city,points,activeCardId}: MapProp) => {
+const Map = ({city,offers,activeCardId}: MapProp) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const map = useMap({mapRef, city});
 
@@ -25,19 +25,19 @@ const Map = ({city,points,activeCardId}: MapProp) => {
         }
       });
 
-      points.forEach((point) => {
-        const isActive = point.id === activeCardId;
+      offers.forEach((offer) => {
+        const isActive = offer.id === activeCardId;
         leaflet
           .marker({
-            lat:point.location.latitude,
-            lng:point.location.longitude,
+            lat:offer.location.latitude,
+            lng:offer.location.longitude,
           }, {
             icon: isActive ? CurrentCustomIcon : DefaultCustomIcon,
           })
           .addTo(map);
       });
     }
-  },[map,points, activeCardId]);
+  },[map,offers, activeCardId]);
 
   return (
     <div

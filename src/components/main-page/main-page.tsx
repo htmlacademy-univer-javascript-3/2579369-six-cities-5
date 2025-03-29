@@ -116,7 +116,7 @@ const MainPage = ({offers}: MainPageProps): JSX.Element => {
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city= {AmsterdamCity} points={offers} activeCardId={activeCard} />
+                <Map city= {AmsterdamCity} offers={offers} activeCardId={activeCard} />
               </section>
             </div>
           </div>
