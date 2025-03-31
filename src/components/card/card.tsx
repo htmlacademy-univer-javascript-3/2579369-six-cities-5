@@ -15,6 +15,8 @@ const Card = ({offer, block, onCardHover}: CardProps): JSX.Element => {
 
   const {isPremium, previewImage, id, price, rating, title, type } = offer;
 
+  const cardSize = block === 'favorites' ? {width: 150, height: 110} : {width: 260, height: 200};
+
 
   return(
     <article
@@ -28,7 +30,7 @@ const Card = ({offer, block, onCardHover}: CardProps): JSX.Element => {
         </div>)}
       <div className={`${block}__image-wrapper place-card__image-wrapper`}>
         <Link to={getOfferPath(id)}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt={title}></img>
+          <img className="place-card__image" src={previewImage} width={cardSize.width} height={cardSize.height} alt={title}></img>
         </Link>
       </div>
       <div className="place-card__info">
@@ -37,11 +39,11 @@ const Card = ({offer, block, onCardHover}: CardProps): JSX.Element => {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <button className="place-card__bookmark-button button" type="button">
+          <button className={`place-card__bookmark-button ${block === 'favorites' ? 'place-card__bookmark-button--active' : ''} button`} type="button">
             <svg className="place-card__bookmark-icon" width="18" height="19">
               <use xlinkHref="#icon-bookmark"></use>
             </svg>
-            <span className="visually-hidden">To bookmarks</span>
+            <span className="visually-hidden">{block === 'favorites' ? 'In bookmark' : 'To bookmarks'}</span>
           </button>
         </div>
         <div className="place-card__rating rating">
