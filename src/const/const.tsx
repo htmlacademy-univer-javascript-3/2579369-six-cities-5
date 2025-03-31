@@ -32,5 +32,12 @@ const ratingMap = {
   '2' : 'badly',
   '1' : 'terribly',
 };
-
-export {Setting, ratingMap};
+const AmsterdamCity = {
+  name:CityName.Amsterdam,
+  location:{
+    latitude:52.35514938496378,
+    longitude: 4.673877537499948,
+    zoom: 10,
+  },
+};
+export {Setting, ratingMap, AmsterdamCity};
