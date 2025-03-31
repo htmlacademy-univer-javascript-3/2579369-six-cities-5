@@ -19,25 +19,12 @@ const Map = ({city,offers,activeCardId}: MapProp) => {
 
   useEffect(() => {
 
-    if(map && !markersLayer.current) {
+    if(map && !markersLayer.current){
       markersLayer.current = leaflet.layerGroup().addTo(map);
     }
 
-    return() => {
-      if(map && markersLayer.current) {
-        markersLayer.current.clearLayers();
-        map.removeLayer(markersLayer.current);
-        markersLayer.current = null;
-      }
-    };
-
-  },[map]);
-
-  useEffect(() => {
-
     if(map && markersLayer.current) {
 
-      markersLayer.current.clearLayers();
 
       offers.forEach((offer) => {
         const isActive = offer.id === activeCardId;
@@ -50,6 +37,14 @@ const Map = ({city,offers,activeCardId}: MapProp) => {
           })
           .addTo(markersLayer.current!);
       });
+
+      return () => {
+        if(map && markersLayer.current) {
+          markersLayer.current.clearLayers();
+          map.removeLayer(markersLayer.current);
+          markersLayer.current = null;
+        }
+      };
     }
   },[map,offers, activeCardId]);
 
