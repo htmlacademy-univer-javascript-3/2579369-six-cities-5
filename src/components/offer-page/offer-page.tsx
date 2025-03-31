@@ -5,6 +5,7 @@ import ReviewsList from './reviews-list';
 import Map from '../map/map';
 import { OfferPreview} from '../../types/offers-preview';
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
 
 type OfferPageProp = {
@@ -13,6 +14,8 @@ type OfferPageProp = {
 
 const OfferPage = ({offers}: OfferPageProp): JSX.Element => {
 
+  const{id} = useParams<{id:string}>();
+  const filteredOffers = offers.filter((offer) => offer.id !== id);
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
   return(
@@ -166,14 +169,14 @@ const OfferPage = ({offers}: OfferPageProp): JSX.Element => {
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={AmsterdamCity} offers={offers} activeCardId={activeCard} block="offer"/>
+            <Map city={AmsterdamCity} offers={filteredOffers} activeCardId={activeCard} block="offer"/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <Cards offers = {offers} setActiveCard={setActiveCard}/>
+              <Cards offers = {filteredOffers} setActiveCard={setActiveCard}/>
             </div>
           </section>
         </div>
