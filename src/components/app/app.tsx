@@ -11,6 +11,8 @@ import OfferPage from '../offer-page/offer-page';
 import ErrorPage from '../errorPage/errorPage';
 import PrivateRoute from '../private-route/private-route';
 import { OffersPreview } from '../../types/offers-preview';
+import { Provider } from 'react-redux';
+import { store } from '../store';
 
 
 type AppScreenProps = {
@@ -21,34 +23,37 @@ type AppScreenProps = {
 
 const App = ({authStatus, offers}: AppScreenProps): JSX.Element => (
 
-  <BrowserRouter>
-    <Routes>
-      <Route
-        path={AppRoute.Main}
-        element={<MainPage offers={offers}/>}
-      />
-      <Route
-        path={AppRoute.Favorites}
-        element ={
-          <PrivateRoute isAuthorizate={authStatus === AuthorizationStatus.Auth}>
-            <FavoritesPage offers = {offers}/>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path={AppRoute.Login}
-        element ={<LoginComponent/>}
-      />
-      <Route
-        path={`${AppRoute.Offer}/:id`}
-        element ={<OfferPage/>}
-      />
-      <Route
-        path="*"
-        element={<ErrorPage/>}
-      />
-    </Routes>
-  </BrowserRouter>
+  <Provider store={store}>
+
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={<MainPage offers={offers}/>}
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element ={
+            <PrivateRoute isAuthorizate={authStatus === AuthorizationStatus.Auth}>
+              <FavoritesPage offers = {offers}/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Login}
+          element ={<LoginComponent/>}
+        />
+        <Route
+          path={`${AppRoute.Offer}/:id`}
+          element ={<OfferPage/>}
+        />
+        <Route
+          path="*"
+          element={<ErrorPage/>}
+        />
+      </Routes>
+    </BrowserRouter>
+  </Provider>
 
 );
 
