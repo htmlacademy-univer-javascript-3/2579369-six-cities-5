@@ -9,16 +9,13 @@ import { OfferPreview} from '../../types/offers-preview';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
+import { offersPreview } from '../../mock/offers-preview';
 
 
-type OfferPageProp = {
-  offers:OfferPreview[];
-}
-
-const OfferPage = ({offers}: OfferPageProp): JSX.Element => {
+const OfferPage = (): JSX.Element => {
 
   const{id} = useParams<{id:string}>();
-  const filteredOffers = offers.filter((offer) => offer.id !== id);
+  const filteredOffers = offersPreview.filter((offer) => offer.id !== id);
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
   return(
