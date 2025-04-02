@@ -50,7 +50,7 @@ const Map = ({city,offers,activeCardId}: MapProp) => {
 
   return (
     <div
-      style={{height: '100%'}}
+      style={{height: '100%', width: '100%'}}
       ref={mapRef}
     >
     </div>

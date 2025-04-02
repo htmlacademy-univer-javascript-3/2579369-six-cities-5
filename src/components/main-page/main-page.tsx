@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
 import { OfferPreview } from '../../types/offers-preview';
 import { addPluralEnding } from '../../utils/common';
-import { AppRoute, CityName } from '../../const/const';
+import { AppRoute, AmsterdamCity } from '../../const/const';
 import { useState } from 'react';
 import Map from '../map/map';
 
@@ -11,19 +11,10 @@ type MainPageProps = {
   offers: OfferPreview[];
 };
 
-const AmsterdamCity = {
-  name:CityName.Amsterdam,
-  location:{
-    latitude:52.35514938496378,
-    longitude: 4.673877537499948,
-    zoom: 10,
-  },
-};
 
 const MainPage = ({offers}: MainPageProps): JSX.Element => {
 
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
-  //const handleListItemHover = (listItemName) =>{};
 
   return(
     <div className="page page--gray page--main">
