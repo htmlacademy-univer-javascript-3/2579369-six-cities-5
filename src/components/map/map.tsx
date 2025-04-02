@@ -9,13 +9,11 @@ type MapProp = {
   city:OfferPreview['city'];
   offers:OfferPreview[];
   activeCardId:OfferPreview['id'] | null;
-  block:string;
 }
 
-const Map = ({city,offers,activeCardId, block}: MapProp) => {
+const Map = ({city,offers,activeCardId}: MapProp) => {
   const mapRef = useRef<HTMLDivElement>(null);
   const map = useMap({mapRef, city});
-  const MapSize = (block === 'offer') ? {width: '1144px', height: '579px', margin: 'auto'} : {height: '100%'};
 
   const markersLayer = useRef<leaflet.LayerGroup | null>(null);
 
@@ -52,7 +50,7 @@ const Map = ({city,offers,activeCardId, block}: MapProp) => {
 
   return (
     <div
-      style={MapSize}
+      style={{height: '100%', width: '100%'}}
       ref={mapRef}
     >
     </div>

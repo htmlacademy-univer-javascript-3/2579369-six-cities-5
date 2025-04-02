@@ -10,6 +10,7 @@ import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
 import { offersPreview } from '../../mock/offers-preview';
+import sortReviews from '../../utils/reviews-filter';
 
 
 const OfferPage = (): JSX.Element => {
@@ -168,14 +169,14 @@ const OfferPage = (): JSX.Element => {
               <section className="offer__reviews reviews">
                 <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{Reviews.length}</span></h2>
                 <ul className="reviews__list">
-                  <ReviewsList reviews={Reviews} />
+                  <ReviewsList reviews={sortReviews(Reviews)} />
                 </ul>
                 <ReviewForm />
               </section>
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={AmsterdamCity} offers={filteredOffers} activeCardId={activeCard} block="offer"/>
+            <Map city={AmsterdamCity} offers={filteredOffers} activeCardId={activeCard}/>
           </section>
         </section>
         <div className="container">
