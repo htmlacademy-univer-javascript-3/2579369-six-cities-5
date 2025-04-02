@@ -2,11 +2,14 @@ import { Link} from 'react-router-dom';
 import Logo from '../logo/logo';
 import { AppRoute,AmsterdamCity } from '../../const/const';
 import ReviewsList from './reviews-list';
+import ReviewForm from '../review-form/review-form';
+import { Reviews } from '../../mock/reviews';
 import Map from '../map/map';
 import { OfferPreview} from '../../types/offers-preview';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
+
 
 type OfferPageProp = {
   offers:OfferPreview[];
@@ -165,7 +168,13 @@ const OfferPage = ({offers}: OfferPageProp): JSX.Element => {
                   </p>
                 </div>
               </div>
-              <ReviewsList />
+              <section className="offer__reviews reviews">
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{Reviews.length}</span></h2>
+                <ul className="reviews__list">
+                  <ReviewsList reviews={Reviews} />
+                </ul>
+                <ReviewForm />
+              </section>
             </div>
           </div>
           <section className="offer__map map">
