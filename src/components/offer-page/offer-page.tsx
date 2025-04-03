@@ -11,8 +11,6 @@ import { useParams } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
 import { offersPreview } from '../../mock/offers-preview';
 import sortReviews from '../../utils/reviews-filter';
-import { useAppDispatch } from '../hooks';
-import { fillingOffers } from '../store/action';
 
 
 const OfferPage = (): JSX.Element => {

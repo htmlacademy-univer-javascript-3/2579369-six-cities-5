@@ -1,6 +1,6 @@
 import { createAction } from '@reduxjs/toolkit';
-import { City } from '../../types/offers-preview';
+import { CityName } from '../../const/const';
 
 
-export const changeCity = createAction<City>('changeCity');
+export const changeCity = createAction<CityName>('changeCity');
 export const fillingOffers = createAction('fillingOffers');

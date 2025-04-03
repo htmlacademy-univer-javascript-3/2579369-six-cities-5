@@ -6,7 +6,6 @@ import { changeCity, fillingOffers } from './action';
 const initialState = {
   city: CityName.Paris,
   offers: offersPreview,
-
 };
 
 const reducer = createReducer(initialState, (builder) => {
