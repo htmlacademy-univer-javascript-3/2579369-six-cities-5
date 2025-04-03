@@ -7,7 +7,7 @@ import { AppRoute, AmsterdamCity } from '../../const/const';
 import { useState } from 'react';
 import Map from '../map/map';
 import CityList from './city-list';
-import { CitiesNames } from '../../const/const';
+import { Cities } from '../../mock/cities';
 
 type MainPageProps = {
   offers: OfferPreview[];
@@ -48,7 +48,7 @@ const MainPage = ({offers}: MainPageProps): JSX.Element => {
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <CityList cities={CitiesNames}/>
+          <CityList cities={Cities}/>
         </div>
         <div className="cities">
           <div className="cities__places-container container">

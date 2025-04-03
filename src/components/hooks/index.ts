@@ -3,4 +3,4 @@ import type { State, AppDispatch } from '../../types/state';
 
 export const useAppDispatch = () => useDispatch<AppDispatch>();
 
-export const useeAppSelector: TypedUseSelectorHook<State> = useSelector;
+export const useAppSelector: TypedUseSelectorHook<State> = useSelector;

@@ -1,21 +1,28 @@
-import { Link } from 'react-router-dom';
+import { useAppDispatch, useAppSelector} from '../hooks';
+import { changeCity } from '../store/action';
+import { City } from '../../types/offers-preview';
+import CityItem from './city-item';
+
 
 type CityListProp = {
-  cities:string[];
+  cities:City[];
 }
 
-const CityList = ({cities}:CityListProp):JSX.Element => (
-  <section className="locations container">
-    <ul className="locations__list tabs__list">
-      {cities.map((city) => (
-        <li className="locations__item" key={city}>
-          <Link className="locations__item-link tabs__item" to="#">
-            <span>{city}</span>
-          </Link>
-        </li>
-      ))}
-    </ul>
-  </section>
-);
+const CityList = ({cities}:CityListProp):JSX.Element => {
+
+  const dispatch = useAppDispatch();
+  const activeCity = useAppSelector((state) => state.city);
+
+  return(
+    <section className="locations container">
+      <ul className="locations__list tabs__list">
+        {cities.map((city) => (
+          <CityItem city={city} key={city.name} isActive={activeCity === city.name} onClick={() => dispatch(changeCity(city.name))} />
+        ))}
+      </ul>
+    </section>
+
+  );
+};
 
 export default CityList;
