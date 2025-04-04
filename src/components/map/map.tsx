@@ -24,6 +24,7 @@ const Map = ({city,offers,activeCardId}: MapProp) => {
     }
 
     if(map && markersLayer.current) {
+      map.setView([city.location.latitude, city.location.longitude], city.location.zoom);
 
 
       offers.forEach((offer) => {
@@ -46,7 +47,7 @@ const Map = ({city,offers,activeCardId}: MapProp) => {
         }
       };
     }
-  },[map,offers, activeCardId]);
+  },[map,offers, activeCardId,city]);
 
   return (
     <div

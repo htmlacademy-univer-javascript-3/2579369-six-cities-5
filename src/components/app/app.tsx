@@ -29,7 +29,7 @@ const App = ({authStatus, offers}: AppScreenProps): JSX.Element => (
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage offers={offers}/>}
+          element={<MainPage />}
         />
         <Route
           path={AppRoute.Favorites}

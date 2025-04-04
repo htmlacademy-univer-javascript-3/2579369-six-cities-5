@@ -13,16 +13,16 @@ export const Cities:City[] = [
   {
     name:CityName.Cologne,
     location:{
-      latitude:50.9375,
-      longitude: 6.9603,
+      latitude:50.935173,
+      longitude:6.953101,
       zoom: 10,
     },
   },
   {
     name:CityName.Brussels,
     location:{
-      latitude:550.8503,
-      longitude: 4.3517,
+      latitude:50.8504 ,
+      longitude: 4.34878,
       zoom: 10,
     },
   },
@@ -37,16 +37,16 @@ export const Cities:City[] = [
   {
     name:CityName.Hamburg,
     location:{
-      latitude:53.5511,
-      longitude: 9.9937,
+      latitude:53.57532,
+      longitude: 10.01534,
       zoom: 10,
     },
   },
   {
     name:CityName.Dusseldorf,
     location:{
-      latitude:51.2277,
-      longitude: 6.7735,
+      latitude:51.2217,
+      longitude: 6.77616,
       zoom: 10,
     },
   },

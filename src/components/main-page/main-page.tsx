@@ -3,18 +3,24 @@ import { Link } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
 import { OfferPreview } from '../../types/offers-preview';
 import { addPluralEnding } from '../../utils/common';
-import { AppRoute, AmsterdamCity } from '../../const/const';
+import { AppRoute} from '../../const/const';
 import { useState } from 'react';
 import Map from '../map/map';
 import CityList from './city-list';
 import { Cities } from '../../mock/cities';
+import { useAppSelector } from '../hooks';
 
-type MainPageProps = {
-  offers: OfferPreview[];
-};
+// type MainPageProps = {
+//   offers: OfferPreview[];
+// };
 
 
-const MainPage = ({offers}: MainPageProps): JSX.Element => {
+const MainPage = (): JSX.Element => {
+
+  const activeCity = useAppSelector((state) => state.city);
+  const allOffers = useAppSelector((state) => state.offers);
+  const filteredOffers = allOffers.filter((offer) => offer.city.name === activeCity);
+  const cityInfotmation = Cities.find((city) => city.name === activeCity) || Cities[0];
 
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
@@ -54,7 +60,7 @@ const MainPage = ({offers}: MainPageProps): JSX.Element => {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} place{addPluralEnding(offers.length)} to stay in Amsterdam</b>
+              <b className="places__found">{filteredOffers.length} place{addPluralEnding(filteredOffers.length)} to stay in Amsterdam</b>
               <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
@@ -71,12 +77,12 @@ const MainPage = ({offers}: MainPageProps): JSX.Element => {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <Cards offers = {offers} setActiveCard={setActiveCard}/>
+                <Cards offers = {filteredOffers} setActiveCard={setActiveCard}/>
               </div>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map">
-                <Map city= {AmsterdamCity} offers={offers} activeCardId={activeCard} />
+                <Map city= {cityInfotmation} offers={filteredOffers} activeCardId={activeCard} />
               </section>
             </div>
           </div>
