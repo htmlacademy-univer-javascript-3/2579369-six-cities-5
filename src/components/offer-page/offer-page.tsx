@@ -1,6 +1,6 @@
 import { Link} from 'react-router-dom';
 import Logo from '../logo/logo';
-import { AppRoute,AmsterdamCity } from '../../const/const';
+import { AppRoute} from '../../const/const';
 import ReviewsList from './reviews-list';
 import ReviewForm from '../review-form/review-form';
 import { Reviews } from '../../mock/reviews';
@@ -9,14 +9,20 @@ import { OfferPreview} from '../../types/offers-preview';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
-import { offersPreview } from '../../mock/offers-preview';
 import sortReviews from '../../utils/reviews-filter';
+import { useAppSelector } from '../hooks';
+import { Cities } from '../../mock/cities';
 
 
 const OfferPage = (): JSX.Element => {
 
+  const activeCity = useAppSelector((state) => state.city);
+  const allOffers = useAppSelector((state) => state.offers);
+  const filteredOffers = allOffers.filter((offer) => offer.city.name === activeCity);
+  const cityInfotmation = Cities.find((city) => city.name === activeCity) || Cities[0];
+
   const{id} = useParams<{id:string}>();
-  const filteredOffers = offersPreview.filter((offer) => offer.id !== id);
+  const nearOffers = filteredOffers.filter((offer) => offer.id !== id);
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
   return(
@@ -176,7 +182,7 @@ const OfferPage = (): JSX.Element => {
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={AmsterdamCity} offers={filteredOffers} activeCardId={activeCard}/>
+            <Map city={cityInfotmation} offers={nearOffers} activeCardId={activeCard}/>
           </section>
         </section>
         <div className="container">

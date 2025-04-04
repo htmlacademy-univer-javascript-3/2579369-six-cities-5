@@ -10,10 +10,6 @@ import CityList from './city-list';
 import { Cities } from '../../mock/cities';
 import { useAppSelector } from '../hooks';
 
-// type MainPageProps = {
-//   offers: OfferPreview[];
-// };
-
 
 const MainPage = (): JSX.Element => {
 

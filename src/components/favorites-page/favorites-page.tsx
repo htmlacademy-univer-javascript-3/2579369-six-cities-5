@@ -1,13 +1,13 @@
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
-import { OfferPreview } from '../../types/offers-preview';
 import Card from '../card/card';
 import getFavoritiesByCity from '../../utils/favorities-by-city';
-type FavoritiesProps = {
-  offers: OfferPreview[];
-}
+import { useAppSelector } from '../hooks';
 
-const FavoritesPage = ({offers}: FavoritiesProps): JSX.Element => {
+
+const FavoritesPage = (): JSX.Element => {
+  const offers = useAppSelector((state) => state.offers);
+
   const favoritesByCity = getFavoritiesByCity(offers);
   return (
     <div className="page">

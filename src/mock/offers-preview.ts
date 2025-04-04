@@ -176,7 +176,7 @@ export const offersPreview: OfferPreview[] = [
       zoom: 8
     },
     isFavorite: true,
-    isPremium: true,
+    isPremium: false,
     rating: 3,
     previewImage: '../markup/img/apartment-01.jpg',
     // description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
@@ -212,7 +212,7 @@ export const offersPreview: OfferPreview[] = [
       longitude:2.3431,
       zoom: 8
     },
-    isFavorite: true,
+    isFavorite: false,
     isPremium: true,
     rating: 2,
     previewImage: '../markup/img/apartment-02.jpg',
@@ -249,8 +249,8 @@ export const offersPreview: OfferPreview[] = [
       longitude: 6.9603,
       zoom: 8
     },
-    isFavorite: true,
-    isPremium: true,
+    isFavorite: false,
+    isPremium: false,
     rating: 6,
     previewImage: '../markup/img/apartment-01.jpg',
     // description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
@@ -286,7 +286,7 @@ export const offersPreview: OfferPreview[] = [
       longitude: 4.3517,
       zoom: 8
     },
-    isFavorite: true,
+    isFavorite: false,
     isPremium: true,
     rating: 3,
     previewImage: '../markup/img/apartment-02.jpg',

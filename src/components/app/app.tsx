@@ -10,18 +10,16 @@ import LoginComponent from '../login-component/login-component';
 import OfferPage from '../offer-page/offer-page';
 import ErrorPage from '../errorPage/errorPage';
 import PrivateRoute from '../private-route/private-route';
-import { OffersPreview } from '../../types/offers-preview';
 import { Provider } from 'react-redux';
 import { store } from '../store';
 
 
 type AppScreenProps = {
   authStatus: AuthorizationStatus;
-  offers: OffersPreview;
 }
 
 
-const App = ({authStatus, offers}: AppScreenProps): JSX.Element => (
+const App = ({authStatus}: AppScreenProps): JSX.Element => (
 
   <Provider store={store}>
 
@@ -35,7 +33,7 @@ const App = ({authStatus, offers}: AppScreenProps): JSX.Element => (
           path={AppRoute.Favorites}
           element ={
             <PrivateRoute isAuthorizate={authStatus === AuthorizationStatus.Auth}>
-              <FavoritesPage offers = {offers}/>
+              <FavoritesPage/>
             </PrivateRoute>
           }
         />
