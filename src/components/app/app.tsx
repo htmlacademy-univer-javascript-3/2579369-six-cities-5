@@ -10,44 +10,53 @@ import LoginComponent from '../login-component/login-component';
 import OfferPage from '../offer-page/offer-page';
 import ErrorPage from '../errorPage/errorPage';
 import PrivateRoute from '../private-route/private-route';
-
+import { offersPreview } from '../../mock/offers-preview';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../hooks';
+import { fillingOffers } from '../store/action';
 type AppScreenProps = {
   authStatus: AuthorizationStatus;
 }
 
 
-const App = ({authStatus}: AppScreenProps): JSX.Element => (
+const App = ({authStatus}: AppScreenProps): JSX.Element => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fillingOffers(offersPreview));
+  }, [dispatch]);
 
 
-  <BrowserRouter>
-    <Routes>
-      <Route
-        path={AppRoute.Main}
-        element={<MainPage />}
-      />
-      <Route
-        path={AppRoute.Favorites}
-        element ={
-          <PrivateRoute isAuthorizate={authStatus === AuthorizationStatus.Auth}>
-            <FavoritesPage/>
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path={AppRoute.Login}
-        element ={<LoginComponent/>}
-      />
-      <Route
-        path={`${AppRoute.Offer}/:id`}
-        element ={<OfferPage/>}
-      />
-      <Route
-        path="*"
-        element={<ErrorPage/>}
-      />
-    </Routes>
-  </BrowserRouter>
+  return(
+    <BrowserRouter>
+      <Routes>
+        <Route
+          path={AppRoute.Main}
+          element={<MainPage />}
+        />
+        <Route
+          path={AppRoute.Favorites}
+          element ={
+            <PrivateRoute isAuthorizate={authStatus === AuthorizationStatus.Auth}>
+              <FavoritesPage/>
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path={AppRoute.Login}
+          element ={<LoginComponent/>}
+        />
+        <Route
+          path={`${AppRoute.Offer}/:id`}
+          element ={<OfferPage/>}
+        />
+        <Route
+          path="*"
+          element={<ErrorPage/>}
+        />
+      </Routes>
+    </BrowserRouter>
+  );
 
-);
+};
 
 export default App;
