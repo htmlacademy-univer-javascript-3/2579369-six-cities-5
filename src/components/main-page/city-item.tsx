@@ -7,25 +7,18 @@ type CityItemProp ={
   onClick:() => void;
 }
 
-const CityItem = ({city, isActive, onClick}:CityItemProp) => {
+const CityItem = ({city, isActive, onClick}:CityItemProp) => (
+  <li className="locations__item">
+    <Link
+      className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`}
+      to="#"
+      onClick={() => onClick()}
+    >
+      <span>{city.name}</span>
+    </Link>
+  </li>
 
-  const onCityChangeHandler = () => {
-    onClick();
-  };
-
-  return(
-    <li className="locations__item">
-      <Link
-        className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`}
-        to="#"
-        onClick={onCityChangeHandler}
-      >
-        <span>{city.name}</span>
-      </Link>
-    </li>
-
-  );
-};
+);
 
 export default CityItem;
 
