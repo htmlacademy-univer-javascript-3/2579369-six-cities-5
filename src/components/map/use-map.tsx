@@ -35,7 +35,17 @@ function useMap({mapRef, city}:UseMapProps) {
 
   }, [mapRef, city]);
 
+  useEffect(() => {
+    if(map) {
+      map.setView(
+        {
+          lat: city.location.latitude,
+          lng: city.location.longitude
+        },
+        city.location.zoom);
+    }
+  },[map, city]);
+
   return map;
 }
-
 export default useMap;

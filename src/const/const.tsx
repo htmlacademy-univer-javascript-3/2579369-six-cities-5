@@ -25,6 +25,8 @@ export enum CityName {
   Dusseldorf = 'Dusseldorf'
 }
 
+const CitiesNames = Object.values(CityName);
+
 const ratingMap = {
   '5' : 'perfect',
   '4' : 'good',
@@ -40,4 +42,4 @@ const AmsterdamCity = {
     zoom: 10,
   },
 };
-export {Setting, ratingMap, AmsterdamCity};
+export {Setting, ratingMap, AmsterdamCity, CitiesNames};

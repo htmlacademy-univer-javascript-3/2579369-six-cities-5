@@ -1,6 +1,6 @@
 import { Link} from 'react-router-dom';
 import Logo from '../logo/logo';
-import { AppRoute,AmsterdamCity } from '../../const/const';
+import { AppRoute} from '../../const/const';
 import ReviewsList from './reviews-list';
 import ReviewForm from '../review-form/review-form';
 import { Reviews } from '../../mock/reviews';
@@ -9,14 +9,21 @@ import { OfferPreview} from '../../types/offers-preview';
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
-import { offersPreview } from '../../mock/offers-preview';
 import sortReviews from '../../utils/reviews-filter';
+import { useAppSelector } from '../hooks';
+import { Cities } from '../../mock/cities';
 
 
 const OfferPage = (): JSX.Element => {
 
+  const activeCity = useAppSelector((state) => state.city);
+  const allOffers = useAppSelector((state) => state.offers);
+  const filteredOffers = allOffers.filter((offer) => offer.city.name === activeCity);
+  const cityInfotmation = Cities.find((city) => city.name === activeCity) || Cities[0];
+  const allFavoritesOffers = allOffers.filter((offer) => offer.isFavorite);
+
   const{id} = useParams<{id:string}>();
-  const filteredOffers = offersPreview.filter((offer) => offer.id !== id);
+  const nearOffers = filteredOffers.filter((offer) => offer.id !== id);
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
   return(
@@ -33,7 +40,7 @@ const OfferPage = (): JSX.Element => {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{allFavoritesOffers.length}</span>
                   </Link>
                 </li>
                 <li className="header__nav-item">
@@ -176,14 +183,14 @@ const OfferPage = (): JSX.Element => {
             </div>
           </div>
           <section className="offer__map map">
-            <Map city={AmsterdamCity} offers={filteredOffers} activeCardId={activeCard}/>
+            <Map city={cityInfotmation} offers={nearOffers} activeCardId={activeCard}/>
           </section>
         </section>
         <div className="container">
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <Cards offers = {filteredOffers} setActiveCard={setActiveCard}/>
+              <Cards offers = {nearOffers} setActiveCard={setActiveCard}/>
             </div>
           </section>
         </div>
