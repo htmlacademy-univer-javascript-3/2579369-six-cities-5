@@ -16,6 +16,7 @@ const MainPage = (): JSX.Element => {
   const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);
   const filteredOffers = allOffers.filter((offer) => offer.city.name === activeCity);
+  const allFavoritesOffers = allOffers.filter((offer) => offer.isFavorite);
   const cityInfotmation = Cities.find((city) => city.name === activeCity) || Cities[0];
 
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
@@ -33,7 +34,7 @@ const MainPage = (): JSX.Element => {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{allFavoritesOffers.length}</span>
                   </Link>
                 </li>
                 <li className="header__nav-item">

@@ -20,6 +20,7 @@ const OfferPage = (): JSX.Element => {
   const allOffers = useAppSelector((state) => state.offers);
   const filteredOffers = allOffers.filter((offer) => offer.city.name === activeCity);
   const cityInfotmation = Cities.find((city) => city.name === activeCity) || Cities[0];
+  const allFavoritesOffers = allOffers.filter((offer) => offer.isFavorite);
 
   const{id} = useParams<{id:string}>();
   const nearOffers = filteredOffers.filter((offer) => offer.id !== id);
@@ -39,7 +40,7 @@ const OfferPage = (): JSX.Element => {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{allFavoritesOffers.length}</span>
                   </Link>
                 </li>
                 <li className="header__nav-item">
@@ -189,7 +190,7 @@ const OfferPage = (): JSX.Element => {
           <section className="near-places places">
             <h2 className="near-places__title">Other places in the neighbourhood</h2>
             <div className="near-places__list places__list">
-              <Cards offers = {filteredOffers} setActiveCard={setActiveCard}/>
+              <Cards offers = {nearOffers} setActiveCard={setActiveCard}/>
             </div>
           </section>
         </div>

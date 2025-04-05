@@ -7,6 +7,7 @@ import { useAppSelector } from '../hooks';
 
 const FavoritesPage = (): JSX.Element => {
   const offers = useAppSelector((state) => state.offers);
+  const allFavoritesOffers = offers.filter((offer) => offer.isFavorite);
 
   const favoritesByCity = getFavoritiesByCity(offers);
   return (
@@ -22,7 +23,7 @@ const FavoritesPage = (): JSX.Element => {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{allFavoritesOffers.length}</span>
                   </Link>
                 </li>
                 <li className="header__nav-item">
