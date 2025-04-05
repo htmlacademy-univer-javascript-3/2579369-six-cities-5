@@ -2,6 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app/app';
 import { AuthorizationStatus } from './const/const';
+import { Provider } from 'react-redux';
+import { store } from './components/store';
 
 
 const root = ReactDOM.createRoot(
@@ -10,8 +12,10 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      authStatus={AuthorizationStatus.Auth}
-    />
+    <Provider store={store}>
+      <App
+        authStatus={AuthorizationStatus.Auth}
+      />
+    </Provider>
   </React.StrictMode>
 );
