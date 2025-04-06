@@ -33,9 +33,6 @@ function useMap({mapRef, city}:UseMapProps) {
       isRenderRef.current = true;
     }
 
-  }, [mapRef, city]);
-
-  useEffect(() => {
     if(map) {
       map.setView(
         {
@@ -44,7 +41,9 @@ function useMap({mapRef, city}:UseMapProps) {
         },
         city.location.zoom);
     }
-  },[map, city]);
+
+
+  }, [mapRef, city,map]);
 
   return map;
 }

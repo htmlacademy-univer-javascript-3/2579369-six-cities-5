@@ -45,7 +45,7 @@ const Map = ({city,offers,activeCardId}: MapProp) => {
         }
       };
     }
-  },[map,offers, activeCardId,city]);
+  },[map,offers, activeCardId]);
 
   return (
     <div
