@@ -33,9 +33,18 @@ function useMap({mapRef, city}:UseMapProps) {
       isRenderRef.current = true;
     }
 
-  }, [mapRef, city]);
+    if(map) {
+      map.setView(
+        {
+          lat: city.location.latitude,
+          lng: city.location.longitude
+        },
+        city.location.zoom);
+    }
+
+
+  }, [mapRef, city,map]);
 
   return map;
 }
-
 export default useMap;

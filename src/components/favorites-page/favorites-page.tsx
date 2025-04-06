@@ -1,13 +1,24 @@
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
-import { OfferPreview } from '../../types/offers-preview';
 import Card from '../card/card';
 import getFavoritiesByCity from '../../utils/favorities-by-city';
-type FavoritiesProps = {
-  offers: OfferPreview[];
-}
+import { useAppSelector } from '../hooks';
+import { offersPreview } from '../../mock/offers-preview';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../hooks';
+import { fillingOffers } from '../store/action';
 
-const FavoritesPage = ({offers}: FavoritiesProps): JSX.Element => {
+
+const FavoritesPage = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fillingOffers(offersPreview));
+  }, [dispatch]);
+
+
+  const offers = useAppSelector((state) => state.offers);
+  const allFavoritesOffers = offers.filter((offer) => offer.isFavorite);
+
   const favoritesByCity = getFavoritiesByCity(offers);
   return (
     <div className="page">
@@ -22,7 +33,7 @@ const FavoritesPage = ({offers}: FavoritiesProps): JSX.Element => {
                     <div className="header__avatar-wrapper user__avatar-wrapper">
                     </div>
                     <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">3</span>
+                    <span className="header__favorite-count">{allFavoritesOffers.length}</span>
                   </Link>
                 </li>
                 <li className="header__nav-item">

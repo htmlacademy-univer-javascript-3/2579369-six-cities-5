@@ -25,7 +25,6 @@ const Map = ({city,offers,activeCardId}: MapProp) => {
 
     if(map && markersLayer.current) {
 
-
       offers.forEach((offer) => {
         const isActive = offer.id === activeCardId;
         leaflet
