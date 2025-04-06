@@ -10,23 +10,15 @@ import LoginComponent from '../login-component/login-component';
 import OfferPage from '../offer-page/offer-page';
 import ErrorPage from '../errorPage/errorPage';
 import PrivateRoute from '../private-route/private-route';
-import { offersPreview } from '../../mock/offers-preview';
-import { useEffect } from 'react';
-import { useAppDispatch } from '../hooks';
-import { fillingOffers } from '../store/action';
+
 type AppScreenProps = {
   authStatus: AuthorizationStatus;
 }
 
 
-const App = ({authStatus}: AppScreenProps): JSX.Element => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fillingOffers(offersPreview));
-  }, [dispatch]);
+const App = ({authStatus}: AppScreenProps): JSX.Element =>
 
-
-  return(
+  (
     <BrowserRouter>
       <Routes>
         <Route
@@ -56,7 +48,4 @@ const App = ({authStatus}: AppScreenProps): JSX.Element => {
       </Routes>
     </BrowserRouter>
   );
-
-};
-
 export default App;

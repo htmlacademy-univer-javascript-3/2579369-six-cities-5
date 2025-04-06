@@ -9,9 +9,17 @@ import Map from '../map/map';
 import CityList from './city-list';
 import { Cities } from '../../mock/cities';
 import { useAppSelector } from '../hooks';
+import { offersPreview } from '../../mock/offers-preview';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../hooks';
+import { fillingOffers } from '../store/action';
 
 
 const MainPage = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fillingOffers(offersPreview));
+  }, [dispatch]);
 
   const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);

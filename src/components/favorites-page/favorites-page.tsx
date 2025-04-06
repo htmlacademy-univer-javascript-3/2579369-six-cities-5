@@ -3,9 +3,19 @@ import Logo from '../logo/logo';
 import Card from '../card/card';
 import getFavoritiesByCity from '../../utils/favorities-by-city';
 import { useAppSelector } from '../hooks';
+import { offersPreview } from '../../mock/offers-preview';
+import { useEffect } from 'react';
+import { useAppDispatch } from '../hooks';
+import { fillingOffers } from '../store/action';
 
 
 const FavoritesPage = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fillingOffers(offersPreview));
+  }, [dispatch]);
+
+
   const offers = useAppSelector((state) => state.offers);
   const allFavoritesOffers = offers.filter((offer) => offer.isFavorite);
 
