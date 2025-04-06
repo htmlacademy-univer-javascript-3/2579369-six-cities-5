@@ -12,7 +12,7 @@ const CityItem = ({city, isActive, onClick}:CityItemProp) => (
     <Link
       className={`locations__item-link tabs__item ${isActive ? 'tabs__item--active' : ''}`}
       to="#"
-      onClick={() => onClick()}
+      onClick={onClick}
     >
       <span>{city.name}</span>
     </Link>
