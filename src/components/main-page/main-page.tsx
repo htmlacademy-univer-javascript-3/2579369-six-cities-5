@@ -66,7 +66,7 @@ const MainPage = (): JSX.Element => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffers.length} place{addPluralEnding(filteredOffers.length)} to stay in Amsterdam</b>
-              <form className="places__sorting" action="#" method="get">
+              {/* <form className="places__sorting" action="#" method="get">
                 <span className="places__sorting-caption">Sort by</span>
                 <span className="places__sorting-type" tabIndex={0}>
                   Popular
@@ -80,7 +80,7 @@ const MainPage = (): JSX.Element => {
                   <li className="places__option" tabIndex={0}>Price: high to low</li>
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
-              </form>
+              </form> */}
               <div className="cities__places-list places__list tabs__content">
                 <Cards offers = {filteredOffers} setActiveCard={setActiveCard}/>
               </div>
