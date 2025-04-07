@@ -12,11 +12,9 @@ import { useAppSelector } from '../hooks';
 import { offersPreview } from '../../mock/offers-preview';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../hooks';
-import { fillingOffers, changeSort } from '../store/action';
+import { fillingOffers} from '../store/action';
 import Sorting from './sorting';
 import sort from '../../utils/sort';
-import { Sort } from '../../types/sort';
-
 
 const MainPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
@@ -72,7 +70,7 @@ const MainPage = (): JSX.Element => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffers.length} place{addPluralEnding(filteredOffers.length)} to stay in Amsterdam</b>
-              <Sorting activeSort={activeSort} onChange={(newSort:Sort) => dispatch(changeSort(newSort))}/>
+              <Sorting />
               <div className="cities__places-list places__list tabs__content">
                 <Cards offers = {sortedOffers} setActiveCard={setActiveCard}/>
               </div>

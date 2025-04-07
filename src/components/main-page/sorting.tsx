@@ -1,14 +1,17 @@
 import { useState, KeyboardEvent } from 'react';
 import { SortingMap } from '../../const/const-sort';
 import { Sort } from '../../types/sort';
+import { useAppSelector,useAppDispatch } from '../hooks';
+import { changeSort } from '../store/action';
 
-type SortingProps = {
-  activeSort: Sort;
-  onChange: (newSort: Sort) => void;
-}
 
-const Sorting = ({activeSort, onChange}:SortingProps):JSX.Element => {
+const Sorting = ():JSX.Element => {
+  const dispatch = useAppDispatch();
+
   const [isOpened, setIsOpened] = useState(false);
+  const activeSort = useAppSelector((state) => state.sort);
+
+  const onChange = (newSort:Sort) => dispatch(changeSort(newSort));
 
   function handleKeyDown(evt: KeyboardEvent) {
     if(evt.key === 'Escape' && isOpened) {
