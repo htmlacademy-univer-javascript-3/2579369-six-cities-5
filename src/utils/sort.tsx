@@ -14,10 +14,10 @@ function sortHIghToLow (a:OfferPreview, b:OfferPreview) {
 }
 
 const sort: Record<Sort,(offers: OfferPreview[]) => OfferPreview[]> = {
-  Popular:(offers: OfferPreview[]) => offers.slice(),
-  HighToLow:(offers: OfferPreview[]) => offers.slice().sort(sortHIghToLow),
-  LowToHigh:(offers: OfferPreview[]) => offers.slice().sort(sortLowToHIgh),
-  TopRated:(offers: OfferPreview[]) => offers.slice().sort(sortByRating),
+  Popular:(offers: OfferPreview[]) => offers,
+  HighToLow:(offers: OfferPreview[]) => offers.sort(sortHIghToLow),
+  LowToHigh:(offers: OfferPreview[]) => offers.sort(sortLowToHIgh),
+  TopRated:(offers: OfferPreview[]) => offers.sort(sortByRating),
 };
 
 export default sort;
