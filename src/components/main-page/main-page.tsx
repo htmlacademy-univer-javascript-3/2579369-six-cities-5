@@ -4,7 +4,7 @@ import Cards from '../cards-list/cards-list';
 import { OfferPreview } from '../../types/offers-preview';
 import { addPluralEnding } from '../../utils/common';
 import { AppRoute} from '../../const/const';
-import { useState } from 'react';
+import { useState, useMemo } from 'react';
 import Map from '../map/map';
 import CityList from './city-list';
 import { Cities } from '../../mock/cities';
@@ -12,7 +12,7 @@ import { useAppSelector } from '../hooks';
 import { offersPreview } from '../../mock/offers-preview';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../hooks';
-import { fillingOffers } from '../store/action';
+import { fillingOffers, changeSort } from '../store/action';
 import Sorting from './sorting';
 import sort from '../../utils/sort';
 import { Sort } from '../../types/sort';
@@ -20,20 +20,20 @@ import { Sort } from '../../types/sort';
 
 const MainPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
+
   useEffect(() => {
     dispatch(fillingOffers(offersPreview));
   }, [dispatch]);
 
   const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);
+  const activeSort = useAppSelector((state) => state.sort);
   const filteredOffers = allOffers.filter((offer) => offer.city.name === activeCity);
   const allFavoritesOffers = allOffers.filter((offer) => offer.isFavorite);
   const cityInfotmation = Cities.find((city) => city.name === activeCity) || Cities[0];
 
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
-  const [activeSort, setActiveSort] = useState<Sort>('Popular');
-
-  const sortedOffers = sort[activeSort](filteredOffers);
+  const sortedOffers = useMemo(() => sort[activeSort](filteredOffers), [filteredOffers,activeSort]);
 
   return(
     <div className="page page--gray page--main">
@@ -72,7 +72,7 @@ const MainPage = (): JSX.Element => {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffers.length} place{addPluralEnding(filteredOffers.length)} to stay in Amsterdam</b>
-              <Sorting activeSort={activeSort} onChange={setActiveSort}/>
+              <Sorting activeSort={activeSort} onChange={(newSort:Sort) => dispatch(changeSort(newSort))}/>
               <div className="cities__places-list places__list tabs__content">
                 <Cards offers = {sortedOffers} setActiveCard={setActiveCard}/>
               </div>
