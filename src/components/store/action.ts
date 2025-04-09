@@ -7,3 +7,5 @@ import { Sort } from '../../types/sort';
 export const changeCity = createAction<CityName>('changeCity');
 export const fillingOffers = createAction<OfferPreview[]>('fillingOffers');
 export const changeSort = createAction<Sort>('changeSort');
+
+export const loadOffers = createAction<OfferPreview[]>('loadOffers');
