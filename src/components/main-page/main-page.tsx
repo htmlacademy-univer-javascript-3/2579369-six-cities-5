@@ -14,6 +14,7 @@ import { useAppDispatch } from '../hooks';
 import Sorting from './sorting';
 import sort from '../../utils/sort';
 import { fetchOffers } from '../store/api-action';
+import Spinner from '../spinner/spinner';
 
 
 const MainPage = (): JSX.Element => {
@@ -21,8 +22,9 @@ const MainPage = (): JSX.Element => {
 
   useEffect(() => {
     dispatch(fetchOffers());
-  }, [dispatch]);
+  },[dispatch]);
 
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
   const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);
   const activeSort = useAppSelector((state) => state.sort);
@@ -32,6 +34,12 @@ const MainPage = (): JSX.Element => {
 
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
   const sortedOffers = useMemo(() => sort[activeSort](filteredOffers), [filteredOffers,activeSort]);
+
+  if(isOffersDataLoading) {
+    return(
+      <Spinner/>
+    );
+  }
 
   return(
     <div className="page page--gray page--main">
