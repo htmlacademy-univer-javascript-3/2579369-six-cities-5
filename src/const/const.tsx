@@ -42,4 +42,11 @@ const AmsterdamCity = {
     zoom: 10,
   },
 };
+
+export enum APIRoute {
+  Offers = '/offers',
+  Login = '/login',
+  Signout = '/signout',
+}
+
 export {Setting, ratingMap, AmsterdamCity, CitiesNames};

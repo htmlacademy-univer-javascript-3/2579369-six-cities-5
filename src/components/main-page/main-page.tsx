@@ -9,20 +9,22 @@ import Map from '../map/map';
 import CityList from './city-list';
 import { Cities } from '../../mock/cities';
 import { useAppSelector } from '../hooks';
-import { offersPreview } from '../../mock/offers-preview';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../hooks';
-import { fillingOffers} from '../store/action';
 import Sorting from './sorting';
 import sort from '../../utils/sort';
+import { fetchOffers } from '../store/api-action';
+import Spinner from '../spinner/spinner';
+
 
 const MainPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fillingOffers(offersPreview));
-  }, [dispatch]);
+    dispatch(fetchOffers());
+  },[dispatch]);
 
+  const isOffersDataLoading = useAppSelector((state) => state.isOffersDataLoading);
   const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);
   const activeSort = useAppSelector((state) => state.sort);
@@ -32,6 +34,12 @@ const MainPage = (): JSX.Element => {
 
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
   const sortedOffers = useMemo(() => sort[activeSort](filteredOffers), [filteredOffers,activeSort]);
+
+  if(isOffersDataLoading) {
+    return(
+      <Spinner/>
+    );
+  }
 
   return(
     <div className="page page--gray page--main">
