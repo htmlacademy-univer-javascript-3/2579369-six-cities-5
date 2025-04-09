@@ -9,18 +9,18 @@ import Map from '../map/map';
 import CityList from './city-list';
 import { Cities } from '../../mock/cities';
 import { useAppSelector } from '../hooks';
-import { offersPreview } from '../../mock/offers-preview';
 import { useEffect } from 'react';
 import { useAppDispatch } from '../hooks';
-import { fillingOffers} from '../store/action';
 import Sorting from './sorting';
 import sort from '../../utils/sort';
+import { fetchOffers } from '../store/api-action';
+
 
 const MainPage = (): JSX.Element => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispatch(fillingOffers(offersPreview));
+    dispatch(fetchOffers());
   }, [dispatch]);
 
   const activeCity = useAppSelector((state) => state.city);
