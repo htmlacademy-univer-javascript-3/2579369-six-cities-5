@@ -51,7 +51,7 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   }
 );
 
-export const signAction = createAsyncThunk<void, undefined, {
+export const signoutAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
