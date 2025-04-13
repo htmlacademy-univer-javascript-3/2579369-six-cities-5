@@ -10,15 +10,20 @@ import LoginComponent from '../login-component/login-component';
 import OfferPage from '../offer-page/offer-page';
 import ErrorPage from '../errorPage/errorPage';
 import PrivateRoute from '../private-route/private-route';
+import { useAppSelector, useAppDispatch} from '../hooks';
+import { useEffect } from 'react';
+import { checkAuthAction } from '../store/api-action';
 
-type AppScreenProps = {
-  authStatus: AuthorizationStatus;
-}
 
+const App = (): JSX.Element =>{
+  const dispatch = useAppDispatch();
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
 
-const App = ({authStatus}: AppScreenProps): JSX.Element =>
+  useEffect(() =>{
+    dispatch(checkAuthAction());
+  },[dispatch]);
 
-  (
+  return(
     <BrowserRouter>
       <Routes>
         <Route
@@ -48,4 +53,5 @@ const App = ({authStatus}: AppScreenProps): JSX.Element =>
       </Routes>
     </BrowserRouter>
   );
+};
 export default App;
