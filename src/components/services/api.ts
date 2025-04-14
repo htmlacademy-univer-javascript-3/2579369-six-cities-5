@@ -12,6 +12,7 @@ export const createApi = (): AxiosInstance => {
 
   api.interceptors.request.use(
     (config: InternalAxiosRequestConfig): InternalAxiosRequestConfig => {
+      //console.log('REQUEST TO:', config.url);
       const token = getToken();
 
       if (token && config.headers) {

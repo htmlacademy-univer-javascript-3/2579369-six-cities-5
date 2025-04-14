@@ -1,4 +1,3 @@
-
 import Cards from '../cards-list/cards-list';
 import { OfferPreview } from '../../types/offers-preview';
 import { addPluralEnding } from '../../utils/common';
@@ -29,9 +28,12 @@ const MainPage = (): JSX.Element => {
   const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);
   const activeSort = useAppSelector((state) => state.sort);
-  const authorizatedStatus = useAppSelector((state) => state.authorizationStatus);
+  const user = useAppSelector((state) => state.user);
+
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const filteredOffers = allOffers.filter((offer) => offer.city.name === activeCity);
   const cityInfotmation = Cities.find((city) => city.name === activeCity) || Cities[0];
+  const allFavoritesOffers = allOffers.filter((offer) => offer.isFavorite);
 
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
   const sortedOffers = useMemo(() => sort[activeSort](filteredOffers), [filteredOffers,activeSort]);
@@ -44,8 +46,8 @@ const MainPage = (): JSX.Element => {
 
   return(
     <div className="page page--gray page--main">
-      {authorizatedStatus === AuthorizationStatus.Auth
-        ? <HeaderAuth/>
+      {authorizationStatus === AuthorizationStatus.Auth
+        ? <HeaderAuth user={user} favorites={allFavoritesOffers}/>
         : <HeaderNoAuth/>}
 
       <main className="page__main page__main--index">
