@@ -46,7 +46,7 @@ const AmsterdamCity = {
 export enum APIRoute {
   Offers = '/offers',
   Login = '/login',
-  Signout = '/signout',
+  Logout = '/logout',
 }
 
 export {Setting, ratingMap, AmsterdamCity, CitiesNames};

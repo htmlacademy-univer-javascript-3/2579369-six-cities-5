@@ -3,15 +3,20 @@ import { AppRoute } from '../../const/const';
 import Logo from '../logo/logo';
 import { UserData } from '../../types/user-data';
 import { OfferPreview } from '../../types/offers-preview';
+import { logoutAction } from '../store/api-action';
+import { useAppDispatch } from '../hooks';
+import { useNavigate } from 'react-router-dom';
 
 type HeaderAuthProps = {
   user: UserData | null;
   favorites: OfferPreview[];
 }
 
-const HeaderAuth = ({user, favorites}:HeaderAuthProps): JSX.Element =>
+const HeaderAuth = ({user, favorites}:HeaderAuthProps): JSX.Element =>{
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
-  (
+  return(
     <header className="header">
       <div className="container">
         <div className="header__wrapper">
@@ -27,7 +32,15 @@ const HeaderAuth = ({user, favorites}:HeaderAuthProps): JSX.Element =>
                 </Link>
               </li>
               <li className="header__nav-item">
-                <Link className="header__nav-link" to="/login">
+                <Link
+                  className="header__nav-link"
+                  to="/login"
+                  onClick={(evt) => {
+                    evt.preventDefault();
+                    dispatch(logoutAction());
+                    navigate(AppRoute.Login);
+                  }}
+                >
                   <span className="header__signout">Sign out</span>
                 </Link>
               </li>
@@ -37,4 +50,6 @@ const HeaderAuth = ({user, favorites}:HeaderAuthProps): JSX.Element =>
       </div>
     </header>
   );
+};
+
 export default HeaderAuth;

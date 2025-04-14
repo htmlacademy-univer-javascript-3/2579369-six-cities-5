@@ -53,14 +53,14 @@ export const loginAction = createAsyncThunk<void, AuthData, {
   }
 );
 
-export const signoutAction = createAsyncThunk<void, undefined, {
+export const logoutAction = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
   state: State;
   extra: AxiosInstance;
 }>(
-  'signout',
+  'logout',
   async (_arg, {dispatch, extra: api}) => {
-    await api.delete(APIRoute.Signout);
+    await api.delete(APIRoute.Logout);
     dropToken();
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
