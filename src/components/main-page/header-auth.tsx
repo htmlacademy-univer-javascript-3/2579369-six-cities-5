@@ -24,7 +24,7 @@ const HeaderAuth = ({user, favorites}:HeaderAuthProps): JSX.Element =>{
           <nav className="header__nav">
             <ul className="header__nav-list">
               <li className="header__nav-item user">
-                <Link className="header__nav-link header__nav-link--profile" to={`${AppRoute.Favorites}`}>
+                <Link className="header__nav-link header__nav-link--profile" to={AppRoute.Favorites}>
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
                   <span className="header__user-name user__name">{user?.email}</span>
@@ -34,7 +34,7 @@ const HeaderAuth = ({user, favorites}:HeaderAuthProps): JSX.Element =>{
               <li className="header__nav-item">
                 <Link
                   className="header__nav-link"
-                  to="/login"
+                  to={AppRoute.Login}
                   onClick={(evt) => {
                     evt.preventDefault();
                     dispatch(logoutAction());
