@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
-import { useRef, FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { useAppDispatch } from '../hooks';
 import { useNavigate } from 'react-router-dom';
 import { AppRoute } from '../../const/const';
@@ -8,8 +8,8 @@ import { loginAction } from '../store/api-action';
 
 const LoginComponent = (): JSX.Element => {
 
-  const loginRef = useRef<HTMLInputElement | null>(null);
-  const passwordRef = useRef<HTMLInputElement | null>(null);
+  const[email, setEmail] = useState('');
+  const[password, setPassword] = useState('');
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -17,17 +17,23 @@ const LoginComponent = (): JSX.Element => {
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
 
-    if(loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(loginAction({
-        email: loginRef.current.value,
-        password: passwordRef.current.value,
-      }))
-        .then((resultAction) => {
-          if (loginAction.fulfilled.match(resultAction)) {
-            navigate(AppRoute.Main);
-          }
-        });
-    }
+    dispatch(loginAction({
+      email: email,
+      password: password,
+    }))
+      .then((resultAction) => {
+        if (loginAction.fulfilled.match(resultAction)) {
+          navigate(AppRoute.Main);
+        }
+      });
+  };
+
+  const handleEmailChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(evt.target.value);
+  };
+
+  const handlePasswordChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    setPassword(evt.target.value);
   };
 
   return(
@@ -48,7 +54,7 @@ const LoginComponent = (): JSX.Element => {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">E-mail</label>
                 <input
-                  ref={loginRef}
+                  onChange={handleEmailChange}
                   className="login__input form__input"
                   type="email"
                   name="email"
@@ -60,7 +66,7 @@ const LoginComponent = (): JSX.Element => {
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
                 <input
-                  ref={passwordRef}
+                  onChange={handlePasswordChange}
                   className="login__input form__input"
                   type="password" name="password"
                   placeholder="Password"
