@@ -22,6 +22,14 @@ export const fetchOffers = createAsyncThunk<void, undefined, {
   },
 );
 
+// export const fetchOfferId = createAsyncThunk<void, undefined, {
+//   dispatch: AppDispatch;
+//   state: State;
+//   extra: AxiosInstance;
+// }>(
+
+// );
+
 export const checkAuthAction = createAsyncThunk<void, undefined,{
   dispatch: AppDispatch;
   state: State;

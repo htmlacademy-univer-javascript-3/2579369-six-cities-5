@@ -3,7 +3,7 @@ import { OfferPreview } from '../../types/offers-preview';
 import { CityName, AuthorizationStatus } from '../../const/const';
 import { Sort } from '../../types/sort';
 import { UserData } from '../../types/user-data';
-import { changeCity, fillingOffers, changeSort, loadOffers, requireAuthorization, setOffersDataLoadingStatus, setUser} from './action';
+import { changeCity, fillingOffers, changeSort, loadOffers, requireAuthorization, setOffersDataLoadingStatus, setUser, loadOfferById} from './action';
 
 const initialState:{
   city:CityName;
@@ -12,6 +12,7 @@ const initialState:{
   authorizationStatus: AuthorizationStatus;
   isOffersDataLoading: boolean;
   user: UserData | null;
+  currentOffer: OfferPreview | null;
 } = {
   city: CityName.Paris,
   offers: [],
@@ -19,6 +20,7 @@ const initialState:{
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersDataLoading: false,
   user: null,
+  currentOffer: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -43,6 +45,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUser, (state, action) => {
       state.user = action.payload;
+    })
+    .addCase(loadOfferById, (state, action) => {
+      state.currentOffer = action.payload;
     });
 
 });

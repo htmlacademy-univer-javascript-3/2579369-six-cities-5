@@ -1,6 +1,3 @@
-import { Link} from 'react-router-dom';
-import Logo from '../logo/logo';
-import { AppRoute} from '../../const/const';
 import ReviewsList from './reviews-list';
 import ReviewForm from '../review-form/review-form';
 import { Reviews } from '../../mock/reviews';
@@ -12,6 +9,8 @@ import Cards from '../cards-list/cards-list';
 import sortReviews from '../../utils/reviews-filter';
 import { useAppSelector } from '../hooks';
 import { Cities } from '../../mock/cities';
+import HeaderAuth from '../main-page/header-auth';
+import { getRatingWidth } from '../../utils/cards';
 
 
 const OfferPage = (): JSX.Element => {
@@ -21,38 +20,18 @@ const OfferPage = (): JSX.Element => {
   const filteredOffers = allOffers.filter((offer) => offer.city.name === activeCity);
   const cityInfotmation = Cities.find((city) => city.name === activeCity) || Cities[0];
   const allFavoritesOffers = allOffers.filter((offer) => offer.isFavorite);
+  const user = useAppSelector((state) => state.user);
 
   const{id} = useParams<{id:string}>();
   const nearOffers = filteredOffers.filter((offer) => offer.id !== id);
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
+  const CurrentOffers = allOffers.find((offer) => offer.id === id);
+
   return(
 
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo/>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={`${AppRoute.Favorites}`}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">{allFavoritesOffers.length}</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={`${AppRoute.Login}`}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <HeaderAuth user={user} favorites={allFavoritesOffers}/>
 
       <main className="page__main page__main--offer">
         <section className="offer">
@@ -85,7 +64,7 @@ const OfferPage = (): JSX.Element => {
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {CurrentOffers?.title}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
@@ -96,14 +75,16 @@ const OfferPage = (): JSX.Element => {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  {CurrentOffers?.rating !== undefined && (
+                    <span style={{width: getRatingWidth(CurrentOffers.rating)}}></span>
+                  )}
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">4.8</span>
+                <span className="offer__rating-value rating__value">{CurrentOffers?.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  Apartment
+                  {CurrentOffers?.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
                   3 Bedrooms
@@ -113,7 +94,7 @@ const OfferPage = (): JSX.Element => {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;120</b>
+                <b className="offer__price-value">{`&euro;${CurrentOffers?.price}`}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
