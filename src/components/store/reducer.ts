@@ -1,5 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferPreview } from '../../types/offers-preview';
+import { Offer } from '../../types/offer';
 import { CityName, AuthorizationStatus } from '../../const/const';
 import { Sort } from '../../types/sort';
 import { UserData } from '../../types/user-data';
@@ -12,7 +13,7 @@ const initialState:{
   authorizationStatus: AuthorizationStatus;
   isOffersDataLoading: boolean;
   user: UserData | null;
-  currentOffer: OfferPreview | null;
+  currentOffer: Offer | null;
 } = {
   city: CityName.Paris,
   offers: [],

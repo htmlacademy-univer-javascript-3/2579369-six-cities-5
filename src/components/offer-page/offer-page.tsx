@@ -12,6 +12,7 @@ import { Cities } from '../../mock/cities';
 import HeaderAuth from '../main-page/header-auth';
 import { getRatingWidth } from '../../utils/cards';
 import { fetchOfferId } from '../store/api-action';
+import OfferImgList from './offer-img-list';
 
 
 const OfferPage = (): JSX.Element => {
@@ -35,7 +36,7 @@ const OfferPage = (): JSX.Element => {
     }
   },[dispatch, id]);
 
-  const CurrentOffers = useAppSelector((state) => state.currentOffer);
+  const CurrentOffer = useAppSelector((state) => state.currentOffer);
 
   return(
 
@@ -46,24 +47,11 @@ const OfferPage = (): JSX.Element => {
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/room.jpg" alt="Photo studio"></img>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"></img>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio"></img>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio"></img>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio"></img>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"></img>
-              </div>
+              {CurrentOffer && (
+                <div className="offer__gallery">
+                  <OfferImgList offer={CurrentOffer} />
+                </div>
+              )}
             </div>
           </div>
           <div className="offer__container container">
@@ -73,7 +61,7 @@ const OfferPage = (): JSX.Element => {
               </div>
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  {CurrentOffers?.title}
+                  {CurrentOffer?.title}
                 </h1>
                 <button className="offer__bookmark-button button" type="button">
                   <svg className="offer__bookmark-icon" width="31" height="33">
@@ -84,16 +72,16 @@ const OfferPage = (): JSX.Element => {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  {CurrentOffers?.rating !== undefined && (
-                    <span style={{width: getRatingWidth(CurrentOffers.rating)}}></span>
+                  {CurrentOffer?.rating !== undefined && (
+                    <span style={{width: getRatingWidth(CurrentOffer.rating)}}></span>
                   )}
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{CurrentOffers?.rating}</span>
+                <span className="offer__rating-value rating__value">{CurrentOffer?.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {CurrentOffers?.type}
+                  {CurrentOffer?.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
                   3 Bedrooms
@@ -103,7 +91,7 @@ const OfferPage = (): JSX.Element => {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">{`&euro;${CurrentOffers?.price}`}</b>
+                <b className="offer__price-value">{`&euro;${CurrentOffer?.price}`}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
