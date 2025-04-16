@@ -3,8 +3,9 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../../types/state';
 import { saveToken, dropToken } from '../services/token';
 import { OfferPreview } from '../../types/offers-preview';
+import { Offer } from '../../types/offer';
 import {APIRoute, AuthorizationStatus } from '../../const/const';
-import { loadOffers, setOffersDataLoadingStatus, requireAuthorization, setUser } from './action';
+import { loadOffers, setOffersDataLoadingStatus, requireAuthorization, setUser, loadOfferById } from './action';
 import { AuthData } from '../../types/auth-data';
 import { UserData } from '../../types/user-data';
 
@@ -22,13 +23,19 @@ export const fetchOffers = createAsyncThunk<void, undefined, {
   },
 );
 
-// export const fetchOfferId = createAsyncThunk<void, undefined, {
-//   dispatch: AppDispatch;
-//   state: State;
-//   extra: AxiosInstance;
-// }>(
+export const fetchOfferId = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchOfferById',
+  async (offerId, {dispatch, extra: api}) => {
+    const {data} = await api.get<Offer>(`${APIRoute.Offers}/${offerId}`);
+    dispatch(setOffersDataLoadingStatus(false));
+    dispatch(loadOfferById(data));
+  },
 
-// );
+);
 
 export const checkAuthAction = createAsyncThunk<void, undefined,{
   dispatch: AppDispatch;

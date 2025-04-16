@@ -3,17 +3,20 @@ import ReviewForm from '../review-form/review-form';
 import { Reviews } from '../../mock/reviews';
 import Map from '../map/map';
 import { OfferPreview} from '../../types/offers-preview';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
 import sortReviews from '../../utils/reviews-filter';
-import { useAppSelector } from '../hooks';
+import { useAppSelector, useAppDispatch } from '../hooks';
 import { Cities } from '../../mock/cities';
 import HeaderAuth from '../main-page/header-auth';
 import { getRatingWidth } from '../../utils/cards';
+import { fetchOfferId } from '../store/api-action';
 
 
 const OfferPage = (): JSX.Element => {
+
+  const dispatch = useAppDispatch();
 
   const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);
@@ -26,7 +29,13 @@ const OfferPage = (): JSX.Element => {
   const nearOffers = filteredOffers.filter((offer) => offer.id !== id);
   const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
-  const CurrentOffers = allOffers.find((offer) => offer.id === id);
+  useEffect(() => {
+    if(id){
+      dispatch(fetchOfferId(id));
+    }
+  },[dispatch, id]);
+
+  const CurrentOffers = useAppSelector((state) => state.currentOffer);
 
   return(
 
