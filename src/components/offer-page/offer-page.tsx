@@ -2,7 +2,7 @@ import ReviewsList from './reviews-list';
 import ReviewForm from '../review-form/review-form';
 import Map from '../map/map';
 import { OfferPreview} from '../../types/offers-preview';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
 import sortReviews from '../../utils/reviews-filter';
@@ -10,9 +10,10 @@ import { useAppSelector, useAppDispatch } from '../hooks';
 import { Cities } from '../../mock/cities';
 import HeaderAuth from '../main-page/header-auth';
 import { getRatingWidth } from '../../utils/cards';
-import { fetchOfferId, fetchReviews } from '../store/api-action';
+import { fetchOfferId, fetchReviews, fetchOffers } from '../store/api-action';
 import OfferImgList from './offer-img-list';
 import OfferInsideList from './offer-inside-list';
+import { getDistance } from '../../utils/offer-page';
 
 
 const OfferPage = (): JSX.Element => {
@@ -21,16 +22,16 @@ const OfferPage = (): JSX.Element => {
 
   const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);
-  const filteredOffers = allOffers.filter((offer) => offer.city.name === activeCity);
   const cityInfotmation = Cities.find((city) => city.name === activeCity) || Cities[0];
   const allFavoritesOffers = allOffers.filter((offer) => offer.isFavorite);
   const user = useAppSelector((state) => state.user);
 
   const{id} = useParams<{id:string}>();
-  const nearOffers = filteredOffers.filter((offer) => offer.id !== id);
-  const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
+  const otherOffers = allOffers.filter((offer) => offer.id !== id);
+  const [, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
   useEffect(() => {
+    dispatch(fetchOffers());
     if(id){
       dispatch(fetchOfferId(id));
       dispatch(fetchReviews(id));
@@ -39,6 +40,25 @@ const OfferPage = (): JSX.Element => {
 
   const CurrentOffer = useAppSelector((state) => state.currentOffer);
   const CurrentReviews = useAppSelector((state) => state.currentReviews);
+
+  const nearOffers = useMemo(() => {
+    if (!CurrentOffer) {
+      return [];
+    }
+
+    return otherOffers
+      .map((offer) => ({
+        ...offer,
+        distance: getDistance(
+          CurrentOffer.location.latitude,
+          CurrentOffer.location.longitude,
+          offer.location.latitude,
+          offer.location.longitude
+        )
+      }))
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 3);
+  }, [CurrentOffer, otherOffers]);
 
   return(
 
@@ -136,9 +156,11 @@ const OfferPage = (): JSX.Element => {
               </section>
             </div>
           </div>
-          <section className="offer__map map">
-            <Map city={cityInfotmation} offers={nearOffers} activeCardId={activeCard}/>
-          </section>
+          {CurrentOffer && (
+            <section className="offer__map map">
+              <Map city={cityInfotmation} offers={[CurrentOffer, ...nearOffers]} activeCardId={CurrentOffer.id} />
+            </section>
+          )}
         </section>
         <div className="container">
           <section className="near-places places">
