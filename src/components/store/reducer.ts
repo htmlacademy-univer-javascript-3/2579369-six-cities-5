@@ -1,10 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferPreview } from '../../types/offers-preview';
 import { Offer } from '../../types/offer';
+import { Review } from '../../types/reviews';
 import { CityName, AuthorizationStatus } from '../../const/const';
 import { Sort } from '../../types/sort';
 import { UserData } from '../../types/user-data';
-import { changeCity, fillingOffers, changeSort, loadOffers, requireAuthorization, setOffersDataLoadingStatus, setUser, loadOfferById} from './action';
+import { changeCity, fillingOffers, changeSort, loadOffers, requireAuthorization, setOffersDataLoadingStatus, setUser, loadOfferById, loadReviews} from './action';
 
 const initialState:{
   city:CityName;
@@ -14,6 +15,7 @@ const initialState:{
   isOffersDataLoading: boolean;
   user: UserData | null;
   currentOffer: Offer | null;
+  currentReviews: Review[] | null;
 } = {
   city: CityName.Paris,
   offers: [],
@@ -22,6 +24,7 @@ const initialState:{
   isOffersDataLoading: false,
   user: null,
   currentOffer: null,
+  currentReviews: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -49,6 +52,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadOfferById, (state, action) => {
       state.currentOffer = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.currentReviews = action.payload;
     });
 
 });

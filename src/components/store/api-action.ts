@@ -5,9 +5,10 @@ import { saveToken, dropToken } from '../services/token';
 import { OfferPreview } from '../../types/offers-preview';
 import { Offer } from '../../types/offer';
 import {APIRoute, AuthorizationStatus } from '../../const/const';
-import { loadOffers, setOffersDataLoadingStatus, requireAuthorization, setUser, loadOfferById } from './action';
+import { loadOffers, setOffersDataLoadingStatus, requireAuthorization, setUser, loadOfferById, loadReviews } from './action';
 import { AuthData } from '../../types/auth-data';
 import { UserData } from '../../types/user-data';
+import { Review } from '../../types/reviews';
 
 export const fetchOffers = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -31,8 +32,20 @@ export const fetchOfferId = createAsyncThunk<void, string, {
   'fetchOfferById',
   async (offerId, {dispatch, extra: api}) => {
     const {data} = await api.get<Offer>(`${APIRoute.Offers}/${offerId}`);
-    dispatch(setOffersDataLoadingStatus(false));
     dispatch(loadOfferById(data));
+  },
+
+);
+
+export const fetchReviews = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchReviews',
+  async (offerId, {dispatch, extra: api}) => {
+    const {data} = await api.get<Review[]>(`${APIRoute.Comments}/${offerId}`);
+    dispatch(loadReviews(data));
   },
 
 );

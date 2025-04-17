@@ -1,6 +1,5 @@
 import ReviewsList from './reviews-list';
 import ReviewForm from '../review-form/review-form';
-import { Reviews } from '../../mock/reviews';
 import Map from '../map/map';
 import { OfferPreview} from '../../types/offers-preview';
 import { useState, useEffect } from 'react';
@@ -11,7 +10,7 @@ import { useAppSelector, useAppDispatch } from '../hooks';
 import { Cities } from '../../mock/cities';
 import HeaderAuth from '../main-page/header-auth';
 import { getRatingWidth } from '../../utils/cards';
-import { fetchOfferId } from '../store/api-action';
+import { fetchOfferId, fetchReviews } from '../store/api-action';
 import OfferImgList from './offer-img-list';
 import OfferInsideList from './offer-inside-list';
 
@@ -34,10 +33,12 @@ const OfferPage = (): JSX.Element => {
   useEffect(() => {
     if(id){
       dispatch(fetchOfferId(id));
+      dispatch(fetchReviews(id));
     }
   },[dispatch, id]);
 
   const CurrentOffer = useAppSelector((state) => state.currentOffer);
+  const CurrentReviews = useAppSelector((state) => state.currentReviews);
 
   return(
 
@@ -125,9 +126,11 @@ const OfferPage = (): JSX.Element => {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{Reviews.length}</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{CurrentReviews?.length}</span></h2>
                 <ul className="reviews__list">
-                  <ReviewsList reviews={sortReviews(Reviews)} />
+                  {CurrentReviews && (
+                    <ReviewsList reviews={sortReviews(CurrentReviews)} />
+                  )}
                 </ul>
                 <ReviewForm />
               </section>
