@@ -6,6 +6,7 @@ import { CityName, AuthorizationStatus } from '../../const/const';
 import { Sort } from '../../types/sort';
 import { UserData } from '../../types/user-data';
 import { changeCity, fillingOffers, changeSort, loadOffers, requireAuthorization, setOffersDataLoadingStatus, setUser, loadOfferById, loadReviews} from './action';
+import { updateFavorites } from './api-action';
 
 const initialState:{
   city:CityName;
@@ -15,7 +16,8 @@ const initialState:{
   isOffersDataLoading: boolean;
   user: UserData | null;
   currentOffer: Offer | null;
-  currentReviews: Review[] | null;
+  currentReviews: Review[];
+  favorites: OfferPreview[];
 } = {
   city: CityName.Paris,
   offers: [],
@@ -24,7 +26,8 @@ const initialState:{
   isOffersDataLoading: false,
   user: null,
   currentOffer: null,
-  currentReviews: null,
+  currentReviews: [],
+  favorites: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -55,6 +58,21 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadReviews, (state, action) => {
       state.currentReviews = action.payload;
+    })
+    .addCase(updateFavorites.fulfilled, (state, action) => {
+      const updatedOffer = action.payload;
+      const offerIndex = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
+      if (offerIndex !== -1) {
+        state.offers[offerIndex] = updatedOffer;
+      }
+      if (state.currentOffer?.id === updatedOffer.id) {
+        state.currentOffer = updatedOffer;
+      }
+      if (updatedOffer.isFavorite) {
+        state.favorites.push(updatedOffer);
+      } else {
+        state.favorites = state.favorites.filter((favorite) => favorite.id !== updatedOffer.id);
+      }
     });
 
 });

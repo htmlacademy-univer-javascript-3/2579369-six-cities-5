@@ -3,25 +3,30 @@ import ReviewForm from '../review-form/review-form';
 import Map from '../map/map';
 import { OfferPreview} from '../../types/offers-preview';
 import { useState, useEffect, useMemo } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
 import sortReviews from '../../utils/reviews-filter';
 import { useAppSelector, useAppDispatch } from '../hooks';
 import { Cities } from '../../mock/cities';
+import HeaderNoAuth from '../main-page/header-noAuth';
 import HeaderAuth from '../main-page/header-auth';
 import { getRatingWidth } from '../../utils/cards';
 import { fetchOfferId, fetchReviews, fetchOffers } from '../store/api-action';
 import OfferImgList from './offer-img-list';
 import OfferInsideList from './offer-inside-list';
 import { getDistance } from '../../utils/offer-page';
+import { AppRoute, AuthorizationStatus } from '../../const/const';
+import { updateFavorites } from '../store/api-action';
 
 
 const OfferPage = (): JSX.Element => {
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const activeCity = useAppSelector((state) => state.city);
   const allOffers = useAppSelector((state) => state.offers);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const cityInfotmation = Cities.find((city) => city.name === activeCity) || Cities[0];
   const allFavoritesOffers = allOffers.filter((offer) => offer.isFavorite);
   const user = useAppSelector((state) => state.user);
@@ -60,11 +65,23 @@ const OfferPage = (): JSX.Element => {
       .slice(0, 3);
   }, [CurrentOffer, otherOffers]);
 
+  const handleFavoriteClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+      return;
+    }
+    if(CurrentOffer){
+      dispatch(updateFavorites({offerId: CurrentOffer.id, status: CurrentOffer?.isFavorite ? 0 : 1}));
+    }
+
+  };
+
   return(
 
     <div className="page">
-      <HeaderAuth user={user} favorites={allFavoritesOffers}/>
-
+      {authorizationStatus === AuthorizationStatus.Auth
+        ? <HeaderAuth user={user} favorites={allFavoritesOffers}/>
+        : <HeaderNoAuth/>}
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
@@ -87,7 +104,7 @@ const OfferPage = (): JSX.Element => {
                 <h1 className="offer__name">
                   {CurrentOffer?.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button className={`offer__bookmark-button button ${CurrentOffer?.isFavorite ? 'offer__bookmark-button--active' : ''}`} type="button" onClick={handleFavoriteClick}>
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -146,13 +163,15 @@ const OfferPage = (): JSX.Element => {
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{CurrentReviews?.length}</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{CurrentReviews.length}</span></h2>
                 <ul className="reviews__list">
                   {CurrentReviews && (
                     <ReviewsList reviews={sortReviews(CurrentReviews)} />
                   )}
                 </ul>
-                <ReviewForm />
+                {(authorizationStatus === AuthorizationStatus.Auth) && (
+                  <ReviewForm />
+                )}
               </section>
             </div>
           </div>

@@ -93,3 +93,15 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
   },
 );
+
+export const updateFavorites = createAsyncThunk<Offer, {offerId:string; status:number}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'updateFavorites',
+  async ({offerId, status}, {extra: api}) => {
+    const {data} = await api.post<Offer>(`${APIRoute.Favorite}/${offerId}/${status}`);
+    return data;
+  }
+);
