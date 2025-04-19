@@ -6,7 +6,7 @@ import { CityName, AuthorizationStatus } from '../../const/const';
 import { Sort } from '../../types/sort';
 import { UserData } from '../../types/user-data';
 import { changeCity, fillingOffers, changeSort, loadOffers, requireAuthorization, setOffersDataLoadingStatus, setUser, loadOfferById, loadReviews} from './action';
-import { updateFavorites } from './api-action';
+import { sendReview, updateFavorites } from './api-action';
 
 const initialState:{
   city:CityName;
@@ -73,6 +73,10 @@ const reducer = createReducer(initialState, (builder) => {
       } else {
         state.favorites = state.favorites.filter((favorite) => favorite.id !== updatedOffer.id);
       }
+    })
+    .addCase(sendReview.fulfilled, (state, action) => {
+      const newReview = action.payload;
+      state.currentReviews.push(newReview);
     });
 
 });

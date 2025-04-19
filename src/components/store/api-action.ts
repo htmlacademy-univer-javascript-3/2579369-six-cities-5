@@ -9,6 +9,7 @@ import { loadOffers, setOffersDataLoadingStatus, requireAuthorization, setUser, 
 import { AuthData } from '../../types/auth-data';
 import { UserData } from '../../types/user-data';
 import { Review } from '../../types/reviews';
+import { SendingReview } from '../../types/reviews';
 
 export const fetchOffers = createAsyncThunk<void, undefined, {
   dispatch: AppDispatch;
@@ -67,6 +68,7 @@ export const checkAuthAction = createAsyncThunk<void, undefined,{
   },
 );
 
+
 export const loginAction = createAsyncThunk<void, AuthData, {
   dispatch: AppDispatch;
   state: State;
@@ -102,6 +104,18 @@ export const updateFavorites = createAsyncThunk<Offer, {offerId:string; status:n
   'updateFavorites',
   async ({offerId, status}, {extra: api}) => {
     const {data} = await api.post<Offer>(`${APIRoute.Favorite}/${offerId}/${status}`);
+    return data;
+  }
+);
+
+export const sendReview = createAsyncThunk<Review,{offerId:string; comment: SendingReview}, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'sendReview',
+  async ({ offerId, comment }, { extra: api }) => {
+    const {data} = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, comment);
     return data;
   }
 );

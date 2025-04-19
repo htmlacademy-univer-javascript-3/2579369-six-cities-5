@@ -6,6 +6,7 @@ import { Review } from '../../types/reviews';
 import { Sort } from '../../types/sort';
 import { AuthorizationStatus } from '../../const/const';
 import { UserData } from '../../types/user-data';
+import { SendingReview } from '../../types/reviews';
 
 
 export const changeCity = createAction<CityName>('changeCity');
@@ -19,3 +20,5 @@ export const requireAuthorization = createAction<AuthorizationStatus>('requiredA
 export const setError = createAction<string | null>('setErrors');
 export const setOffersDataLoadingStatus = createAction<boolean>('setOffersDataLoadingStatus');
 export const setUser = createAction<UserData | null>('setUser');
+
+export const addReview = createAction<SendingReview>('addReview');
