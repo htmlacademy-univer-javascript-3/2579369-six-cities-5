@@ -133,7 +133,7 @@ const OfferPage = (): JSX.Element => {
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;${CurrentOffer?.price}</b>
+                <b className="offer__price-value">&euro;{CurrentOffer?.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
