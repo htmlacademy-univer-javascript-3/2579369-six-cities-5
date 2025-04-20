@@ -5,7 +5,7 @@ import { saveToken, dropToken } from '../services/token';
 import { OfferPreview } from '../../types/offers-preview';
 import { Offer } from '../../types/offer';
 import {APIRoute, AuthorizationStatus } from '../../const/const';
-import { loadOffers, setOffersDataLoadingStatus, requireAuthorization, setUser, loadOfferById, loadReviews } from './action';
+import { loadOffers,loadNearOffers, setOffersDataLoadingStatus, requireAuthorization, setUser, loadOfferById, loadReviews } from './action';
 import { AuthData } from '../../types/auth-data';
 import { UserData } from '../../types/user-data';
 import { Review } from '../../types/reviews';
@@ -49,6 +49,18 @@ export const fetchReviews = createAsyncThunk<void, string, {
     dispatch(loadReviews(data));
   },
 
+);
+
+export const fetchNearOffers = createAsyncThunk<void, string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance;
+}>(
+  'fetchNearOffers',
+  async (offerId, {dispatch, extra: api}) => {
+    const {data} = await api.get<OfferPreview[]>(`${APIRoute.Offers}/${offerId}/nearby`);
+    dispatch(loadNearOffers(data));
+  }
 );
 
 export const checkAuthAction = createAsyncThunk<void, undefined,{
