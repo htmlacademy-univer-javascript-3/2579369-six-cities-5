@@ -5,8 +5,7 @@ import { Review } from '../../types/reviews';
 import { CityName, AuthorizationStatus } from '../../const/const';
 import { Sort } from '../../types/sort';
 import { UserData } from '../../types/user-data';
-import { changeCity, fillingOffers, changeSort, loadOffers,loadNearOffers, requireAuthorization, setOffersDataLoadingStatus, setUser, loadOfferById, loadReviews} from './action';
-import { sendReview, updateFavorites } from './api-action';
+import { changeCity, fillingOffers, changeSort,addFavoriteOffer,addReview, loadOffers,loadNearOffers, requireAuthorization, setOffersDataLoadingStatus, setUser, loadOfferById, loadReviews} from './action';
 
 const initialState:{
   city:CityName;
@@ -64,7 +63,7 @@ const reducer = createReducer(initialState, (builder) => {
     .addCase(loadNearOffers, (state, action) => {
       state.nearOffers = action.payload;
     })
-    .addCase(updateFavorites.fulfilled, (state, action) => {
+    .addCase(addFavoriteOffer, (state, action) => {
       const updatedOffer = action.payload;
       const offerIndex = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
       if (offerIndex !== -1) {
@@ -79,7 +78,7 @@ const reducer = createReducer(initialState, (builder) => {
         state.favorites = state.favorites.filter((favorite) => favorite.id !== updatedOffer.id);
       }
     })
-    .addCase(sendReview.fulfilled, (state, action) => {
+    .addCase(addReview, (state, action) => {
       const newReview = action.payload;
       state.currentReviews.push(newReview);
     });

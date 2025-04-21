@@ -5,7 +5,7 @@ import { saveToken, dropToken } from '../services/token';
 import { OfferPreview } from '../../types/offers-preview';
 import { Offer } from '../../types/offer';
 import {APIRoute, AuthorizationStatus } from '../../const/const';
-import { loadOffers,loadNearOffers, setOffersDataLoadingStatus, requireAuthorization, setUser, loadOfferById, loadReviews } from './action';
+import { loadOffers,loadNearOffers, addFavoriteOffer,addReview, setOffersDataLoadingStatus, requireAuthorization, setUser, loadOfferById, loadReviews } from './action';
 import { AuthData } from '../../types/auth-data';
 import { UserData } from '../../types/user-data';
 import { Review } from '../../types/reviews';
@@ -114,8 +114,9 @@ export const updateFavorites = createAsyncThunk<Offer, {offerId:string; status:n
   extra: AxiosInstance;
 }>(
   'updateFavorites',
-  async ({offerId, status}, {extra: api}) => {
+  async ({offerId, status}, {dispatch, extra: api}) => {
     const {data} = await api.post<Offer>(`${APIRoute.Favorite}/${offerId}/${status}`);
+    dispatch(addFavoriteOffer(data));
     return data;
   }
 );
@@ -126,8 +127,9 @@ export const sendReview = createAsyncThunk<Review,{offerId:string; comment: Send
   extra: AxiosInstance;
 }>(
   'sendReview',
-  async ({ offerId, comment }, { extra: api }) => {
+  async ({ offerId, comment }, {dispatch, extra: api }) => {
     const {data} = await api.post<Review>(`${APIRoute.Comments}/${offerId}`, comment);
+    dispatch(addReview(data));
     return data;
   }
 );

@@ -40,14 +40,13 @@ const ReviewForm = ({offerId}: ReviewFormProps) => {
           comment: form.review,
           rating: Number(form.rating),
         },
-      })).unwrap()
-        .then(() => {
-          setForm({
-            review:'',
-            rating:'',
-          });
-          setIsSending(false);
+      })).then(() => {
+        setForm({
+          review:'',
+          rating:'',
         });
+        setIsSending(false);
+      });
     }
   };
 
