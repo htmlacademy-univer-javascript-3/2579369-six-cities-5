@@ -33,19 +33,18 @@ const OfferPage = (): JSX.Element => {
   const{id} = useParams<{id:string}>();
   const [, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
+  const isIdValid = (offerId: string): boolean => {
+    const idRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    return idRegex.test(offerId);
+  };
 
   useEffect(() => {
-    if(id){
+    if(id && isIdValid(id)){
       dispatch(fetchOfferId(id));
       dispatch(fetchNearOffers(id));
-    }
-  },[dispatch, id]);
-
-  useEffect(() => {
-    if(id){
       dispatch(fetchReviews(id));
     }
-  },[dispatch,id]);
+  },[dispatch, id]);
 
   const currentOffer = useAppSelector((state) => state.currentOffer);
   const currentReviews = useAppSelector((state) => state.currentReviews) ?? [];
