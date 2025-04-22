@@ -1,7 +1,14 @@
-import { Fragment, useState, ChangeEvent, useMemo } from 'react';
+import { Fragment, useState, ChangeEvent, useMemo, FormEvent } from 'react';
 import { ratingMap } from '../../const/const';
+import { useAppDispatch } from '../hooks';
+import { sendReview } from '../store/api-action';
+//import { fetchReviews } from '../store/api-action';
 
-const ReviewForm = () => {
+type ReviewFormProps = {
+  offerId: string;
+}
+
+const ReviewForm = ({offerId}: ReviewFormProps) => {
 
   const [form, setForm] = useState({
     review: '',
@@ -9,7 +16,9 @@ const ReviewForm = () => {
   });
 
   const isValid = useMemo(() =>form.review.length >= 50 && form.rating !== '',[form.review, form.rating]);
+  const [isSending, setIsSending] = useState(false);
 
+  const dispatch = useAppDispatch();
 
   function handleChange(evt: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) {
     const {name, value} = evt.target;
@@ -19,8 +28,25 @@ const ReviewForm = () => {
     }));
   }
 
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+
+    if (offerId && isValid) {
+      setIsSending(true);
+
+      dispatch(sendReview({
+        offerId,
+        comment: {
+          comment: form.review,
+          rating: Number(form.rating),
+        },
+      }));
+      setIsSending(false);
+    }
+  };
+
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form className="reviews__form form" action="#" method="post" onSubmit={handleSubmit}>
       <label className="reviews__label form__label" htmlFor="review">Your review</label>
       <div className="reviews__rating-form form__rating">
         {Object.entries(ratingMap)
@@ -33,6 +59,7 @@ const ReviewForm = () => {
                 id={`${score}-stars`} type="radio"
                 checked={form.rating === score}
                 onChange={handleChange}
+                disabled={isSending}
               />
               <label htmlFor={`${score}-stars`} className="reviews__rating-label form__rating-label" title={title}>
                 <svg className="form__star-image" width="37" height="33">
@@ -50,6 +77,7 @@ const ReviewForm = () => {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={form.review}
         onChange={handleChange}
+        disabled={isSending}
       />
       <div className="reviews__button-wrapper">
         <p className="reviews__help">

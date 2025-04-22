@@ -1,9 +1,11 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { OfferPreview } from '../../types/offers-preview';
+import { Offer } from '../../types/offer';
+import { Review } from '../../types/reviews';
 import { CityName, AuthorizationStatus } from '../../const/const';
 import { Sort } from '../../types/sort';
 import { UserData } from '../../types/user-data';
-import { changeCity, fillingOffers, changeSort, loadOffers, requireAuthorization, setOffersDataLoadingStatus, setUser} from './action';
+import { changeCity, fillingOffers, changeSort,addFavoriteOffer,addReview, loadOffers,loadNearOffers, requireAuthorization, setOffersDataLoadingStatus, setUser, loadOfferById, loadReviews} from './action';
 
 const initialState:{
   city:CityName;
@@ -12,6 +14,10 @@ const initialState:{
   authorizationStatus: AuthorizationStatus;
   isOffersDataLoading: boolean;
   user: UserData | null;
+  currentOffer: Offer | null;
+  currentReviews: Review[];
+  nearOffers: OfferPreview[];
+  favorites: OfferPreview[];
 } = {
   city: CityName.Paris,
   offers: [],
@@ -19,6 +25,10 @@ const initialState:{
   authorizationStatus: AuthorizationStatus.Unknown,
   isOffersDataLoading: false,
   user: null,
+  currentOffer: null,
+  currentReviews: [],
+  nearOffers:[],
+  favorites: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -43,6 +53,34 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(setUser, (state, action) => {
       state.user = action.payload;
+    })
+    .addCase(loadOfferById, (state, action) => {
+      state.currentOffer = action.payload;
+    })
+    .addCase(loadReviews, (state, action) => {
+      state.currentReviews = action.payload;
+    })
+    .addCase(loadNearOffers, (state, action) => {
+      state.nearOffers = action.payload;
+    })
+    .addCase(addFavoriteOffer, (state, action) => {
+      const updatedOffer = action.payload;
+      const offerIndex = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
+      if (offerIndex !== -1) {
+        state.offers[offerIndex] = updatedOffer;
+      }
+      if (state.currentOffer?.id === updatedOffer.id) {
+        state.currentOffer = updatedOffer;
+      }
+      if (updatedOffer.isFavorite) {
+        state.favorites.push(updatedOffer);
+      } else {
+        state.favorites = state.favorites.filter((favorite) => favorite.id !== updatedOffer.id);
+      }
+    })
+    .addCase(addReview, (state, action) => {
+      const newReview = action.payload;
+      state.currentReviews.push(newReview);
     });
 
 });

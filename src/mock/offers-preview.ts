@@ -1,7 +1,6 @@
 import { OfferPreview } from '../types/offers-preview';
 import { CityName } from '../const/const';
 
-//const AVATAR_URL = 'https://i.pravatar.cc/128';
 
 export const offersPreview: OfferPreview[] = [
   {
@@ -26,20 +25,6 @@ export const offersPreview: OfferPreview[] = [
     isPremium: true,
     rating: 2,
     previewImage: '../markup/img/apartment-01.jpg',
-    // description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    // bedrooms: 3,
-    // goods: [
-    //   'Heating'
-    // ],
-    // host:{
-    //   name:'Oliver Conner',
-    //   avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
-    //   isPro: false,
-    // },
-    // images: [
-    //   '../markup/img/apartment-01.jpg'
-    // ],
-    // maxAdults: 4,
   },
   {
     id: '9af6f221-h28f-3521-82cd-e0b882a27f00',
@@ -63,21 +48,6 @@ export const offersPreview: OfferPreview[] = [
     isPremium: true,
     rating: 5,
     previewImage: '../markup/img/apartment-03.jpg',
-    // description: 'A big house near Elbphilharmonie.',
-    // bedrooms: 5,
-    // goods: [
-    //   'Heating',
-    //   'Veranda'
-    // ],
-    // host:{
-    //   name:'Filip Snow',
-    //   avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
-    //   isPro: false,
-    // },
-    // images: [
-    //   '../markup/img/apartment-02.jpg'
-    // ],
-    // maxAdults: 6,
   },
   {
     id: '4gf2f449-h99k-1121-82lm-e0b882a55f00',
@@ -101,22 +71,6 @@ export const offersPreview: OfferPreview[] = [
     isPremium: false,
     rating: 3,
     previewImage: '../markup/img/apartment-02.jpg',
-    // description: 'Beautiful small flat in the heart of the city.',
-    // bedrooms: 2,
-    // goods: [
-    //   'Heating',
-    //   'Breakfast'
-    // ],
-    // host:{
-    //   name:'Lolita Milyavskaya',
-    //   avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
-    //   isPro: true,
-    // },
-    // images: [
-    //   '../markup/img/apartment-small-03.jpg',
-    //   '../markup/img/apartment-small-03.jpg'
-    // ],
-    // maxAdults: 3,
   },
   {
     id: '7ff2d234-s99s-2222-97lg-e0b882a55f00',
@@ -140,22 +94,6 @@ export const offersPreview: OfferPreview[] = [
     isPremium: false,
     rating: 5,
     previewImage: '../markup/img/apartment-03.jpg',
-    // description: 'Modern mansion in a quiet area.',
-    // bedrooms: 6,
-    // goods: [
-    //   'Heating',
-    //   'Breakfast'
-    // ],
-    // host:{
-    //   name:'Alex Partini',
-    //   avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
-    //   isPro: true,
-    // },
-    // images: [
-    //   '../markup/img/apartment-small-04.jpg',
-    //   '../markup/img/apartment-small-04.jpg'
-    // ],
-    // maxAdults: 10,
   },
   {
     id: '6af6f711-c28d-4121-82cd-e0b462a27f00',
@@ -179,20 +117,6 @@ export const offersPreview: OfferPreview[] = [
     isPremium: false,
     rating: 3,
     previewImage: '../markup/img/apartment-01.jpg',
-    // description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    // bedrooms: 3,
-    // goods: [
-    //   'Heating'
-    // ],
-    // host:{
-    //   name:'Oliver Conner',
-    //   avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
-    //   isPro: false,
-    // },
-    // images: [
-    //   '../markup/img/apartment-01.jpg'
-    // ],
-    // maxAdults: 4,
   },
   {
     id: '7af6f711-c28d-4121-82cd-e0b462a27f00',
@@ -216,20 +140,6 @@ export const offersPreview: OfferPreview[] = [
     isPremium: true,
     rating: 2,
     previewImage: '../markup/img/apartment-02.jpg',
-    // description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    // bedrooms: 3,
-    // goods: [
-    //   'Heating'
-    // ],
-    // host:{
-    //   name:'Oliver Conner',
-    //   avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
-    //   isPro: false,
-    // },
-    // images: [
-    //   '../markup/img/apartment-01.jpg'
-    // ],
-    // maxAdults: 4,
   },
   {
     id: '1sf6f711-c28d-4121-82cd-e0b462a27f00',
@@ -253,20 +163,6 @@ export const offersPreview: OfferPreview[] = [
     isPremium: false,
     rating: 6,
     previewImage: '../markup/img/apartment-01.jpg',
-    // description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    // bedrooms: 3,
-    // goods: [
-    //   'Heating'
-    // ],
-    // host:{
-    //   name:'Oliver Conner',
-    //   avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
-    //   isPro: false,
-    // },
-    // images: [
-    //   '../markup/img/apartment-01.jpg'
-    // ],
-    // maxAdults: 4,
   },
   {
     id: '6aa5f711-c28d-4121-82cd-e0b462a27f00',
@@ -290,20 +186,6 @@ export const offersPreview: OfferPreview[] = [
     isPremium: true,
     rating: 3,
     previewImage: '../markup/img/apartment-02.jpg',
-    // description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    // bedrooms: 3,
-    // goods: [
-    //   'Heating'
-    // ],
-    // host:{
-    //   name:'Oliver Conner',
-    //   avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
-    //   isPro: false,
-    // },
-    // images: [
-    //   '../markup/img/apartment-01.jpg'
-    // ],
-    // maxAdults: 4,
   },
   {
     id: '3vv6f711-c28d-4121-82cd-e0b462a27f00',
@@ -327,20 +209,6 @@ export const offersPreview: OfferPreview[] = [
     isPremium: true,
     rating: 3,
     previewImage: '../markup/img/apartment-03.jpg',
-    // description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam.',
-    // bedrooms: 3,
-    // goods: [
-    //   'Heating'
-    // ],
-    // host:{
-    //   name:'Oliver Conner',
-    //   avatarUrl:`${AVATAR_URL}?rnd=${Math.random()}`,
-    //   isPro: false,
-    // },
-    // images: [
-    //   '../markup/img/apartment-01.jpg'
-    // ],
-    // maxAdults: 4,
   },
 
 ];

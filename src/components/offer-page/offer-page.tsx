@@ -1,93 +1,120 @@
-import { Link} from 'react-router-dom';
-import Logo from '../logo/logo';
-import { AppRoute} from '../../const/const';
 import ReviewsList from './reviews-list';
 import ReviewForm from '../review-form/review-form';
-import { Reviews } from '../../mock/reviews';
 import Map from '../map/map';
 import { OfferPreview} from '../../types/offers-preview';
-import { useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useState, useEffect, useMemo } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import Cards from '../cards-list/cards-list';
 import sortReviews from '../../utils/reviews-filter';
-import { useAppSelector } from '../hooks';
+import { useAppSelector, useAppDispatch } from '../hooks';
 import { Cities } from '../../mock/cities';
+import HeaderNoAuth from '../main-page/header-noAuth';
+import HeaderAuth from '../main-page/header-auth';
+import { getRatingWidth } from '../../utils/cards';
+import { fetchOfferId, fetchReviews, fetchNearOffers } from '../store/api-action';
+import OfferImgList from './offer-img-list';
+import OfferInsideList from './offer-inside-list';
+import { getDistance } from '../../utils/offer-page';
+import { AppRoute, AuthorizationStatus } from '../../const/const';
+import { updateFavorites } from '../store/api-action';
+import Spinner from '../spinner/spinner';
 
 
 const OfferPage = (): JSX.Element => {
 
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const activeCity = useAppSelector((state) => state.city);
-  const allOffers = useAppSelector((state) => state.offers);
-  const filteredOffers = allOffers.filter((offer) => offer.city.name === activeCity);
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const cityInfotmation = Cities.find((city) => city.name === activeCity) || Cities[0];
-  const allFavoritesOffers = allOffers.filter((offer) => offer.isFavorite);
+  const user = useAppSelector((state) => state.user);
 
   const{id} = useParams<{id:string}>();
-  const nearOffers = filteredOffers.filter((offer) => offer.id !== id);
-  const [activeCard, setActiveCard] = useState<OfferPreview['id'] | null>(null);
+  const [, setActiveCard] = useState<OfferPreview['id'] | null>(null);
 
+  const isIdValid = (offerId: string): boolean => {
+    const idRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+    return idRegex.test(offerId);
+  };
+
+  useEffect(() => {
+    if(id && isIdValid(id)){
+      dispatch(fetchOfferId(id));
+      dispatch(fetchNearOffers(id));
+      dispatch(fetchReviews(id));
+    }
+  },[dispatch, id]);
+
+  const currentOffer = useAppSelector((state) => state.currentOffer);
+  const currentReviews = useAppSelector((state) => state.currentReviews) ?? [];
+  const allNearOffers = useAppSelector((state) => state.nearOffers);
+  const favoritesOffers = useAppSelector((state) => state.favorites);
+
+  const nearOffers = useMemo(() => {
+    if (!currentOffer) {
+      return [];
+    }
+
+    return allNearOffers
+      .map((offer) => ({
+        ...offer,
+        distance: getDistance(
+          currentOffer.location.latitude,
+          currentOffer.location.longitude,
+          offer.location.latitude,
+          offer.location.longitude
+        )
+      }))
+      .sort((a, b) => a.distance - b.distance)
+      .slice(0, 3);
+  }, [currentOffer, allNearOffers]);
+
+  const handleFavoriteClick = () => {
+    if (authorizationStatus !== AuthorizationStatus.Auth) {
+      navigate(AppRoute.Login);
+      return;
+    }
+    if(currentOffer){
+      dispatch(updateFavorites({offerId: currentOffer.id, status: currentOffer.isFavorite ? 0 : 1}));
+    }
+
+  };
+
+  if(!currentOffer){
+    return(
+      <Spinner/>
+    );
+  }
   return(
 
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo/>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to={`${AppRoute.Favorites}`}>
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">{allFavoritesOffers.length}</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to={`${AppRoute.Login}`}>
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
-
+      {authorizationStatus === AuthorizationStatus.Auth
+        ? <HeaderAuth user={user} favorites={favoritesOffers}/>
+        : <HeaderNoAuth/>}
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/room.jpg" alt="Photo studio"></img>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"></img>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-02.jpg" alt="Photo studio"></img>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-03.jpg" alt="Photo studio"></img>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/studio-01.jpg" alt="Photo studio"></img>
-              </div>
-              <div className="offer__image-wrapper">
-                <img className="offer__image" src="img/apartment-01.jpg" alt="Photo studio"></img>
-              </div>
+              {currentOffer && (
+                <div className="offer__gallery">
+                  <OfferImgList offer={currentOffer} />
+                </div>
+              )}
             </div>
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              <div className="offer__mark">
-                <span>Premium</span>
-              </div>
+              {currentOffer.isPremium && (
+                <div className="offer__mark">
+                  <span>Premium</span>
+                </div>
+              )}
               <div className="offer__name-wrapper">
                 <h1 className="offer__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {currentOffer.title}
                 </h1>
-                <button className="offer__bookmark-button button" type="button">
+                <button className={`offer__bookmark-button button ${currentOffer.isFavorite ? 'offer__bookmark-button--active' : ''}`} type="button" onClick={handleFavoriteClick}>
                   <svg className="offer__bookmark-icon" width="31" height="33">
                     <use xlinkHref="#icon-bookmark"></use>
                   </svg>
@@ -96,95 +123,73 @@ const OfferPage = (): JSX.Element => {
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
+                  {currentOffer.rating !== undefined && (
+                    <span style={{width: getRatingWidth(currentOffer.rating)}}></span>
+                  )}
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">4.8</span>
+                <span className="offer__rating-value rating__value">{currentOffer.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  Apartment
+                  {currentOffer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  3 Bedrooms
+                  {`${currentOffer.bedrooms} Bedrooms`}
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max 4 adults
+                  {`Max ${currentOffer.maxAdults} adults`}
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;120</b>
+                <b className="offer__price-value">&euro;{currentOffer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
-                <ul className="offer__inside-list">
-                  <li className="offer__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="offer__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Towels
-                  </li>
-                  <li className="offer__inside-item">
-                    Heating
-                  </li>
-                  <li className="offer__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="offer__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="offer__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="offer__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="offer__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="offer__inside-item">
-                    Fridge
-                  </li>
-                </ul>
+                {currentOffer && (
+                  <OfferInsideList offer={currentOffer}/>
+                )}
               </div>
               <div className="offer__host">
                 <h2 className="offer__host-title">Meet the host</h2>
                 <div className="offer__host-user user">
                   <div className="offer__avatar-wrapper offer__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="offer__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar"></img>
+                    <img className="offer__avatar user__avatar" src={currentOffer.host.avatarUrl} width="74" height="74" alt="Host avatar"></img>
                   </div>
                   <span className="offer__user-name">
-                    Angelina
+                    {currentOffer.host.name}
                   </span>
-                  <span className="offer__user-status">
-                    Pro
-                  </span>
+                  {currentOffer.host.isPro && (
+                    <span className="offer__user-status">
+                      Pro
+                    </span>
+                  )}
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="offer__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    {currentOffer.description}
                   </p>
                 </div>
               </div>
               <section className="offer__reviews reviews">
-                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{Reviews.length}</span></h2>
+                <h2 className="reviews__title">Reviews &middot; <span className="reviews__amount">{currentReviews.length}</span></h2>
                 <ul className="reviews__list">
-                  <ReviewsList reviews={sortReviews(Reviews)} />
+                  {currentReviews && (
+                    <ReviewsList reviews={sortReviews(Array.isArray(currentReviews) ? currentReviews : [])} />
+                  )}
                 </ul>
-                <ReviewForm />
+                {(authorizationStatus === AuthorizationStatus.Auth) && (
+                  <ReviewForm offerId={currentOffer.id} />
+                )}
               </section>
             </div>
           </div>
-          <section className="offer__map map">
-            <Map city={cityInfotmation} offers={nearOffers} activeCardId={activeCard}/>
-          </section>
+          {currentOffer && (
+            <section className="offer__map map">
+              <Map city={cityInfotmation} offers={[currentOffer, ...nearOffers]} activeCardId={currentOffer.id} />
+            </section>
+          )}
         </section>
         <div className="container">
           <section className="near-places places">
