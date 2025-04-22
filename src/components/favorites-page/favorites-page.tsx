@@ -1,51 +1,25 @@
 import { Link } from 'react-router-dom';
-import Logo from '../logo/logo';
 import Card from '../card/card';
 import getFavoritiesByCity from '../../utils/favorities-by-city';
 import { useAppSelector } from '../hooks';
-import { offersPreview } from '../../mock/offers-preview';
-import { useEffect } from 'react';
-import { useAppDispatch } from '../hooks';
-import { fillingOffers } from '../store/action';
-
+import FavoritesEmptyPage from '../favorites-empty-page/favorites-empty-page';
+import HeaderAuth from '../main-page/header-auth';
 
 const FavoritesPage = (): JSX.Element => {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(fillingOffers(offersPreview));
-  }, [dispatch]);
 
+  const allFavoritesOffers = useAppSelector((state) => state.favorites);
+  const user = useAppSelector((state) => state.user);
 
-  const offers = useAppSelector((state) => state.offers);
-  const allFavoritesOffers = offers.filter((offer) => offer.isFavorite);
+  const favoritesByCity = getFavoritiesByCity(allFavoritesOffers);
 
-  const favoritesByCity = getFavoritiesByCity(offers);
+  if(allFavoritesOffers.length === 0) {
+    return(
+      <FavoritesEmptyPage user={user!}/>
+    );
+  }
   return (
     <div className="page">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <Logo/>
-            <nav className="header__nav">
-              <ul className="header__nav-list">
-                <li className="header__nav-item user">
-                  <Link className="header__nav-link header__nav-link--profile" to="#">
-                    <div className="header__avatar-wrapper user__avatar-wrapper">
-                    </div>
-                    <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
-                    <span className="header__favorite-count">{allFavoritesOffers.length}</span>
-                  </Link>
-                </li>
-                <li className="header__nav-item">
-                  <Link className="header__nav-link" to="/login">
-                    <span className="header__signout">Sign out</span>
-                  </Link>
-                </li>
-              </ul>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <HeaderAuth user={user} favorites={allFavoritesOffers}/>
 
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">

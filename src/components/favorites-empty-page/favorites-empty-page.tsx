@@ -1,7 +1,12 @@
 import { Link } from 'react-router-dom';
 import Logo from '../logo/logo';
+import { UserData } from '../../types/user-data';
 
-const FavoritesEmptyPage = (): JSX.Element => (
+type FavoritesEmptyPageProps = {
+  user: UserData;
+}
+
+const FavoritesEmptyPage = ({user}: FavoritesEmptyPageProps): JSX.Element => (
   <div className="page page--favorites-empty">
     <header className="header">
       <div className="container">
@@ -13,7 +18,7 @@ const FavoritesEmptyPage = (): JSX.Element => (
                 <Link className="header__nav-link header__nav-link--profile" to="#">
                   <div className="header__avatar-wrapper user__avatar-wrapper">
                   </div>
-                  <span className="header__user-name user__name">Oliver.conner@gmail.com</span>
+                  <span className="header__user-name user__name">{user.email}</span>
                   <span className="header__favorite-count">0</span>
                 </Link>
               </li>
