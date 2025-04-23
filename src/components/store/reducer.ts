@@ -68,9 +68,13 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(addFavoriteOffer, (state, action) => {
       const updatedOffer = action.payload;
+      const nearOfferIndex = state.nearOffers.findIndex((offer) => offer.id === updatedOffer.id);
       const offerIndex = state.offers.findIndex((offer) => offer.id === updatedOffer.id);
       if (offerIndex !== -1) {
         state.offers[offerIndex] = updatedOffer;
+      }
+      if (nearOfferIndex !== -1) {
+        state.nearOffers[nearOfferIndex] = updatedOffer;
       }
       if (state.currentOffer?.id === updatedOffer.id) {
         state.currentOffer = updatedOffer;
