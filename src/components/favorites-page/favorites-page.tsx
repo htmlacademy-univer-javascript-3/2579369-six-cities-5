@@ -1,11 +1,19 @@
-import { Link } from 'react-router-dom';
+import { Link} from 'react-router-dom';
 import Card from '../card/card';
 import getFavoritiesByCity from '../../utils/favorities-by-city';
-import { useAppSelector } from '../hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import FavoritesEmptyPage from '../favorites-empty-page/favorites-empty-page';
 import HeaderAuth from '../main-page/header-auth';
+import { useEffect } from 'react';
+import { fetchFavorites } from '../store/api-action';
+
 
 const FavoritesPage = (): JSX.Element => {
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchFavorites());
+  },[dispatch]);
 
   const allFavoritesOffers = useAppSelector((state) => state.favorites);
   const user = useAppSelector((state) => state.user);
@@ -17,6 +25,7 @@ const FavoritesPage = (): JSX.Element => {
       <FavoritesEmptyPage user={user!}/>
     );
   }
+
   return (
     <div className="page">
       <HeaderAuth user={user} favorites={allFavoritesOffers}/>

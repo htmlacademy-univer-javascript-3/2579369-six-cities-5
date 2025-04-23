@@ -11,7 +11,7 @@ import { Cities } from '../../mock/cities';
 import HeaderNoAuth from '../main-page/header-noAuth';
 import HeaderAuth from '../main-page/header-auth';
 import { getRatingWidth } from '../../utils/cards';
-import { fetchOfferId, fetchReviews, fetchNearOffers } from '../store/api-action';
+import { fetchOfferId, fetchReviews, fetchNearOffers, fetchFavorites } from '../store/api-action';
 import OfferImgList from './offer-img-list';
 import OfferInsideList from './offer-inside-list';
 import { getDistance } from '../../utils/offer-page';
@@ -43,6 +43,7 @@ const OfferPage = (): JSX.Element => {
       dispatch(fetchOfferId(id));
       dispatch(fetchNearOffers(id));
       dispatch(fetchReviews(id));
+      dispatch(fetchFavorites());
     }
   },[dispatch, id]);
 

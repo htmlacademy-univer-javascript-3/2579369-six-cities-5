@@ -16,6 +16,7 @@ export const loadOffers = createAction<OfferPreview[]>('loadOffers');
 export const loadOfferById = createAction<Offer>('loadOfferById');
 export const loadReviews = createAction<Review[]>('loadReviews');
 export const loadNearOffers = createAction<OfferPreview[]>('loadNearOffers');
+export const loadFavorites = createAction<OfferPreview[]>('loadFavorites');
 
 export const requireAuthorization = createAction<AuthorizationStatus>('requiredAuthorization');
 export const setError = createAction<string | null>('setErrors');

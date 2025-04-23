@@ -5,7 +5,7 @@ import { Review } from '../../types/reviews';
 import { CityName, AuthorizationStatus } from '../../const/const';
 import { Sort } from '../../types/sort';
 import { UserData } from '../../types/user-data';
-import { changeCity, fillingOffers, changeSort,addFavoriteOffer,addReview, loadOffers,loadNearOffers, requireAuthorization, setOffersDataLoadingStatus, setUser, loadOfferById, loadReviews} from './action';
+import { changeCity, fillingOffers, changeSort,addFavoriteOffer,addReview, loadOffers,loadNearOffers, requireAuthorization, setOffersDataLoadingStatus, setUser, loadOfferById, loadReviews, loadFavorites} from './action';
 
 const initialState:{
   city:CityName;
@@ -62,6 +62,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadNearOffers, (state, action) => {
       state.nearOffers = action.payload;
+    })
+    .addCase(loadFavorites,(state, action) => {
+      state.favorites = action.payload;
     })
     .addCase(addFavoriteOffer, (state, action) => {
       const updatedOffer = action.payload;
